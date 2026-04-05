@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { SignerModal } from "@/components/SignerModal";
 
 interface Doc {
   id: string;
@@ -23,6 +24,7 @@ export function DocumentsClient({ docs }: Props) {
   const [dismissing, setDismissing] = useState<string | null>(null);
   const [scanning, setScanning] = useState<"gmail" | "drive" | null>(null);
   const [scanResult, setScanResult] = useState<string | null>(null);
+  const [signingDoc, setSigningDoc] = useState<Doc | null>(null);
 
   async function handleDismiss(id: string) {
     setDismissing(id);
@@ -47,6 +49,20 @@ export function DocumentsClient({ docs }: Props) {
 
   return (
     <div>
+      {/* Signer modal */}
+      {signingDoc && (
+        <SignerModal
+          documentName={signingDoc.fileName}
+          detectedDocId={signingDoc.id}
+          onClose={() => setSigningDoc(null)}
+          onSuccess={() => {
+            setSigningDoc(null);
+            setScanResult("✓ Sent for signing! Check Slack for the link.");
+            router.refresh();
+          }}
+        />
+      )}
+
       {/* Scan buttons */}
       <div className="flex items-center gap-3 mb-5">
         <button
@@ -81,7 +97,7 @@ export function DocumentsClient({ docs }: Props) {
                 <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Source</th>
                 <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">File</th>
                 <th className="text-left px-5 py-3 text-xs font-medium text-gray-500 hidden sm:table-cell">
-                  Subject / Context
+                  Subject
                 </th>
                 <th className="text-left px-5 py-3 text-xs font-medium text-gray-500 hidden sm:table-cell">
                   Detected
@@ -125,9 +141,16 @@ export function DocumentsClient({ docs }: Props) {
                   </td>
                   <td className="px-5 py-3">
                     <div className="flex items-center gap-2 justify-end">
-                      <button className="text-xs text-blue-600 hover:underline whitespace-nowrap">
-                        Send for signing
-                      </button>
+                      {!doc.reviewed ? (
+                        <button
+                          onClick={() => setSigningDoc(doc)}
+                          className="text-xs bg-blue-600 text-white px-2.5 py-1 rounded hover:bg-blue-700 whitespace-nowrap"
+                        >
+                          Send for signing
+                        </button>
+                      ) : (
+                        <span className="text-xs text-green-600">Sent ✓</span>
+                      )}
                       <button
                         onClick={() => handleDismiss(doc.id)}
                         disabled={dismissing === doc.id}
