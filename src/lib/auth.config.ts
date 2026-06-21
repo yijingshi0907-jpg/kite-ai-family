@@ -4,6 +4,7 @@ import Google from "next-auth/providers/google";
 // Edge-compatible auth config — no Prisma, no Node.js-only modules.
 // Used by middleware only.
 export const authConfig: NextAuthConfig = {
+  session: { strategy: "jwt" },
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -21,7 +22,8 @@ export const authConfig: NextAuthConfig = {
       const isPublic =
         pathname.startsWith("/login") ||
         pathname.startsWith("/api/auth") ||
-        pathname.startsWith("/api/webhooks");
+        pathname.startsWith("/api/webhooks") ||
+        pathname.startsWith("/family");
 
       if (isPublic) return true;
       return isLoggedIn;
