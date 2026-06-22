@@ -1,12 +1,13 @@
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
+import type { DetectedDocument } from "@prisma/client";
 import Link from "next/link";
 
 export default async function DashboardPage() {
   const session = await auth();
   const userId = session?.user?.id;
 
-  const [pendingCount, inProgressCount, completedCount, recentDocs] = userId
+  const [pendingCount, inProgressCount, completedCount, recentDocs]: [number, number, number, DetectedDocument[]] = userId
     ? await Promise.all([
         db.detectedDocument.count({
           where: { userId, dismissed: false, reviewed: false },
