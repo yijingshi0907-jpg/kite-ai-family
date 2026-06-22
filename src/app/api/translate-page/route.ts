@@ -137,6 +137,26 @@ export async function GET(req: NextRequest) {
     return new NextResponse("无法获取原文，请检查链接是否有效。", { status: 502 });
   }
 
+  // Detect bot/Cloudflare challenge pages
+  const isBlocked =
+    /just a moment/i.test(html) ||
+    /verify you are human/i.test(html) ||
+    /enable javascript.*reload/i.test(html) ||
+    /cf-browser-verification/i.test(html) ||
+    (html.length < 5000 && /javascript/i.test(html) && /<p>/i.test(html) === false);
+
+  if (isBlocked) {
+    const ogTitle = extractMeta(html, "og:title");
+    const translatedTitle = ogTitle ? await translateChunk(ogTitle) : "";
+    return new NextResponse(
+      renderPage(ogTitle, translatedTitle, url,
+        `<p style="color:#888;font-size:0.9rem">该网站启用了访问保护，无法自动提取内容。</p>
+         <a class="original-btn" href="${url}" target="_blank" rel="noopener">访问原文 →</a>`,
+        true),
+      { headers: { "Content-Type": "text/html; charset=utf-8" } },
+    );
+  }
+
   // Extract title & OG meta
   const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
   const rawTitle = titleMatch ? titleMatch[1].replace(/\s*[|\-–—].*$/, "").trim() : "";
