@@ -40,7 +40,7 @@ function InterviewCard({ post }: { post: PersonalUpdate }) {
 }
 
 function baiduTranslate(url: string) {
-  return `https://fanyi.baidu.com/transpage?query=${encodeURIComponent(url)}&from=auto&to=zh&source=url&render=1`;
+  return `https://fanyi.baidu.com/transpage?query=${encodeURIComponent(url)}&from=en&to=zh&source=url&render=1`;
 }
 
 function NewsCard({ article }: { article: PersonalNewsArticle }) {
