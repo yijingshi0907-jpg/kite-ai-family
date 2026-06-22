@@ -137,17 +137,18 @@ export async function GET(req: NextRequest) {
     return new NextResponse("无法获取原文，请检查链接是否有效。", { status: 502 });
   }
 
-  // Detect bot/Cloudflare challenge pages (English and Chinese variants)
-  const pCount = (h: string) => (h.match(/<p[^>]*>[\s\S]{40,}<\/p>/gi) || []).length;
+  // Detect bot/Cloudflare challenge pages by checking raw HTML and stripped text
+  const strippedForCheck = html.replace(/<[^>]+>/g, " ");
   const isBlocked =
-    /just a moment/i.test(html) ||
-    /verify you are human/i.test(html) ||
-    /enable javascript.*reload/i.test(html) ||
+    /just a moment/i.test(strippedForCheck) ||
+    /verify you are human/i.test(strippedForCheck) ||
+    /enable javascript/i.test(strippedForCheck) ||
     /cf-browser-verification/i.test(html) ||
-    /javascript.*禁用|禁用.*javascript/i.test(html) ||
-    /验证您不是机器人|不是机器人/.test(html) ||
-    /启用\s*javascript.*重新加载/.test(html) ||
-    (html.length < 8000 && /javascript/i.test(html) && pCount(html) < 2);
+    /javascript.{0,10}禁用|禁用.{0,10}javascript/i.test(strippedForCheck) ||
+    /验证您不是机器人/.test(strippedForCheck) ||
+    /不是机器人/.test(strippedForCheck) ||
+    /启用\s*javascript/.test(strippedForCheck) ||
+    /重新加载页面/.test(strippedForCheck);
 
   if (isBlocked) {
     const ogTitle = extractMeta(html, "og:title");
@@ -210,6 +211,6 @@ export async function GET(req: NextRequest) {
 
   return new NextResponse(
     renderPage(ogTitle || rawTitle, translatedTitle, url, bodyParagraphs, isPartial),
-    { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=3600" } },
+    { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } },
   );
 }
