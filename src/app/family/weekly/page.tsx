@@ -89,21 +89,6 @@ export default async function WeeklyPage() {
         </p>
       </div>
 
-      {/* Live Twitter timelines */}
-      <div className="mb-10">
-        <div className="flex items-center justify-between mb-3">
-          <div>
-            <h3 className="text-base font-semibold text-gray-800">🔴 实时 X 动态</h3>
-            <p className="text-xs text-gray-400 mt-0.5">完整推文 · 原图 · 实时更新（需翻墙）</p>
-          </div>
-          <a href="https://x.com/KiteAIChinese" target="_blank" rel="noopener noreferrer"
-            className="text-xs px-2 py-1 bg-gray-900 text-white rounded-full hover:bg-gray-700 transition-colors">
-            去关注
-          </a>
-        </div>
-        <TwitterTimeline account="KiteAIChinese" />
-      </div>
-
       {/* Chinese curated posts from DB */}
       <div>
         <div className="flex items-center gap-3 mb-4">
