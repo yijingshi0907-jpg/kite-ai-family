@@ -137,13 +137,17 @@ export async function GET(req: NextRequest) {
     return new NextResponse("无法获取原文，请检查链接是否有效。", { status: 502 });
   }
 
-  // Detect bot/Cloudflare challenge pages
+  // Detect bot/Cloudflare challenge pages (English and Chinese variants)
+  const pCount = (h: string) => (h.match(/<p[^>]*>[\s\S]{40,}<\/p>/gi) || []).length;
   const isBlocked =
     /just a moment/i.test(html) ||
     /verify you are human/i.test(html) ||
     /enable javascript.*reload/i.test(html) ||
     /cf-browser-verification/i.test(html) ||
-    (html.length < 5000 && /javascript/i.test(html) && /<p>/i.test(html) === false);
+    /javascript.*禁用|禁用.*javascript/i.test(html) ||
+    /验证您不是机器人|不是机器人/.test(html) ||
+    /启用\s*javascript.*重新加载/.test(html) ||
+    (html.length < 8000 && /javascript/i.test(html) && pCount(html) < 2);
 
   if (isBlocked) {
     const ogTitle = extractMeta(html, "og:title");

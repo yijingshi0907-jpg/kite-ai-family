@@ -23,6 +23,11 @@ export default function FamilyLayout({ children }: { children: ReactNode }) {
         </div>
       </header>
 
+      {/* China notice banner */}
+      <div className="bg-amber-50 border-b border-amber-200 px-4 py-2 text-center text-xs text-amber-800">
+        📺 观看视频需要翻墙 · 文章已提供中文译文
+      </div>
+
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         {children}
       </main>
