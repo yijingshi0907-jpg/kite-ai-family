@@ -72,9 +72,6 @@ export default async function RequestsPage() {
                       <span className="text-gray-800 font-medium truncate max-w-xs block">
                         {req.documentName}
                       </span>
-                      {req.slackMessageTs && (
-                        <span className="text-xs text-gray-400">Posted to Slack ✓</span>
-                      )}
                     </td>
                     <td className="px-5 py-3">
                       <span

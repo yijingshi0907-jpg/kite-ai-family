@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { getGoogleClient } from "@/lib/google";
-import { downloadSlackFile } from "@/lib/slack-scanner";
 import { google } from "googleapis";
 
 export async function GET(
@@ -92,12 +91,6 @@ async function fetchDocumentBytes(
       );
       return { buffer: Buffer.from(res.data as ArrayBuffer), filename, mimeType };
     }
-  }
-
-  if (doc.source === "SLACK") {
-    const buffer = await downloadSlackFile(doc.sourceId);
-    const mimeType = filename.endsWith(".pdf") ? "application/pdf" : "application/octet-stream";
-    return { buffer, filename, mimeType };
   }
 
   throw new Error(`Unsupported source: ${doc.source}`);

@@ -4,7 +4,6 @@ import { db } from "@/lib/db";
 import { createEmbeddedDraft, type Signer } from "@/lib/dropboxsign";
 import { getGoogleClient } from "@/lib/google";
 import { google } from "googleapis";
-import { downloadSlackFile } from "@/lib/slack-scanner";
 
 export async function POST(req: NextRequest) {
   const session = await auth();
@@ -143,10 +142,6 @@ async function downloadDocument(
       );
       return Buffer.from(res.data as ArrayBuffer);
     }
-  }
-
-  if (doc.source === "SLACK") {
-    return downloadSlackFile(doc.sourceId);
   }
 
   throw new Error(`Unsupported document source: ${doc.source}`);

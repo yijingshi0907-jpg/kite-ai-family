@@ -6,7 +6,6 @@ import { DROPBOX_SIGN_FOLDERS } from "@/lib/constants";
 interface Props {
   initialDriveFolder: string;
   initialKeywords: string[];
-  initialSlackChannelIds: string[];
   userEmail: string;
   initialDropboxFolder: string;
   initialRequesterEmail: string;
@@ -16,7 +15,6 @@ interface Props {
 export function SettingsForm({
   initialDriveFolder,
   initialKeywords,
-  initialSlackChannelIds,
   userEmail,
   initialDropboxFolder,
   initialRequesterEmail,
@@ -24,30 +22,12 @@ export function SettingsForm({
 }: Props) {
   const [driveFolder, setDriveFolder] = useState(initialDriveFolder);
   const [keywords, setKeywords] = useState(initialKeywords.join(", "));
-  const [slackChannels, setSlackChannels] = useState<string[]>(
-    initialSlackChannelIds.length > 0 ? initialSlackChannelIds : ["C0ARANHAXEV"]
-  );
   const [dropboxFolder, setDropboxFolder] = useState(initialDropboxFolder);
   const [requesterEmail, setRequesterEmail] = useState(initialRequesterEmail);
   const [ccEmail, setCcEmail] = useState(initialCcEmail);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
-
-  function addChannel() {
-    if (slackChannels.length >= 10) return;
-    setSlackChannels([...slackChannels, ""]);
-  }
-
-  function removeChannel(index: number) {
-    setSlackChannels(slackChannels.filter((_, i) => i !== index));
-  }
-
-  function updateChannel(index: number, value: string) {
-    const updated = [...slackChannels];
-    updated[index] = value;
-    setSlackChannels(updated);
-  }
 
   async function handleSave() {
     setSaving(true);
@@ -59,15 +39,12 @@ export function SettingsForm({
       .map((k) => k.trim().toLowerCase())
       .filter(Boolean);
 
-    const slackChannelIds = slackChannels.map((c) => c.trim()).filter(Boolean);
-
     const res = await fetch("/api/settings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         driveMonitorFolder: driveFolder,
         keywordsList,
-        slackChannelIds,
         dropboxSignFolder: dropboxFolder,
         dropboxSignRequesterEmail: requesterEmail,
         dropboxSignCcEmail: ccEmail,
@@ -87,48 +64,6 @@ export function SettingsForm({
 
   return (
     <>
-      {/* Slack Channels */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h2 className="text-base font-medium text-gray-900 mb-1">Slack Channels</h2>
-        <p className="text-sm text-gray-500 mb-1">
-          Add the channel IDs you want to monitor. The bot must be invited to each channel first.
-        </p>
-        <p className="text-xs text-gray-400 mb-4">
-          Find a channel ID: right-click channel in Slack → <em>View channel details</em> → scroll to bottom.
-          Looks like <code className="bg-gray-100 px-1 py-0.5 rounded">C0ARANHAXEV</code>.
-        </p>
-
-        <div className="space-y-2">
-          {slackChannels.map((channelId, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <input
-                type="text"
-                placeholder="Leave blank to scan entire workspace"
-                value={channelId}
-                onChange={(e) => updateChannel(i, e.target.value)}
-                className="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                onClick={() => removeChannel(i)}
-                disabled={slackChannels.length === 1}
-                className="text-gray-400 hover:text-red-500 disabled:opacity-30 text-lg leading-none px-1"
-                title="Remove"
-              >
-                ×
-              </button>
-            </div>
-          ))}
-        </div>
-
-        <button
-          onClick={addChannel}
-          disabled={slackChannels.length >= 10}
-          className="mt-3 text-sm text-blue-600 hover:underline disabled:opacity-40"
-        >
-          + Add another channel
-        </button>
-      </div>
-
       {/* Google Drive */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h2 className="text-base font-medium text-gray-900 mb-1">Google Drive Folder</h2>

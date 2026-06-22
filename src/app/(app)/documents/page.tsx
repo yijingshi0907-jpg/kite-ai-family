@@ -23,7 +23,7 @@ export default async function DocumentsPage() {
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">Detected Documents</h1>
           <p className="text-sm text-gray-500 mt-1">
-            Documents found in your Gmail, Drive, and Slack matching signing keywords.
+            Documents found in your Gmail and Drive matching signing keywords.
           </p>
         </div>
         <ScanButtons />

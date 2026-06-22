@@ -12,7 +12,6 @@ export async function POST(req: NextRequest) {
   const {
     driveMonitorFolder,
     keywordsList,
-    slackChannelIds,
     dropboxSignFolder,
     dropboxSignRequesterEmail,
     dropboxSignCcEmail,
@@ -20,7 +19,6 @@ export async function POST(req: NextRequest) {
   } = body as {
     driveMonitorFolder?: string;
     keywordsList?: string[];
-    slackChannelIds?: string[];
     dropboxSignFolder?: string;
     dropboxSignRequesterEmail?: string;
     dropboxSignCcEmail?: string;
@@ -32,7 +30,6 @@ export async function POST(req: NextRequest) {
     update: {
       ...(driveMonitorFolder !== undefined && { driveMonitorFolder }),
       ...(keywordsList !== undefined && { keywordsList }),
-      ...(slackChannelIds !== undefined && { slackChannelIds }),
       ...(dropboxSignFolder !== undefined && { dropboxSignFolder: dropboxSignFolder || null }),
       ...(dropboxSignRequesterEmail !== undefined && { dropboxSignRequesterEmail: dropboxSignRequesterEmail || null }),
       ...(dropboxSignCcEmail !== undefined && { dropboxSignCcEmail: dropboxSignCcEmail || null }),
@@ -42,7 +39,6 @@ export async function POST(req: NextRequest) {
       userId: session.user.id,
       driveMonitorFolder: driveMonitorFolder ?? null,
       keywordsList: keywordsList ?? ["sign", "contract", "agreement"],
-      slackChannelIds: slackChannelIds ?? [],
       dropboxSignFolder: dropboxSignFolder ?? null,
       dropboxSignRequesterEmail: dropboxSignRequesterEmail ?? null,
       dropboxSignCcEmail: dropboxSignCcEmail ?? null,
