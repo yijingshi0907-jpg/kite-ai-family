@@ -1,5 +1,5 @@
-import { getCachedPodcasts, refLinks } from "@/lib/family-fetcher";
-import type { PodcastEpisode, RefLink } from "@/lib/family-fetcher";
+import { getPodcasts, getRefLinks } from "@/lib/family-db";
+import type { PodcastEpisode, RefLink } from "@/lib/family-db";
 
 function EpisodeCard({ ep }: { ep: PodcastEpisode }) {
   return (
@@ -7,7 +7,7 @@ function EpisodeCard({ ep }: { ep: PodcastEpisode }) {
       className="flex gap-4 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-4 group">
       <div className="relative flex-shrink-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={ep.thumbnailUrl} alt={ep.titleZh} className="w-28 h-18 rounded-lg object-cover" style={{height:"4.5rem"}} />
+        <img src={ep.thumbnailUrl} alt={ep.titleZh} className="w-28 rounded-lg object-cover" style={{ height: "4.5rem" }} />
         <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-lg group-hover:bg-black/30 transition-colors">
           <span className="text-white text-sm">▶</span>
         </div>
@@ -37,7 +37,7 @@ function LinkCard({ link }: { link: RefLink }) {
 }
 
 export default async function LinksPage() {
-  const episodes = await getCachedPodcasts();
+  const [episodes, links] = await Promise.all([getPodcasts(), getRefLinks()]);
 
   return (
     <section>
@@ -49,7 +49,7 @@ export default async function LinksPage() {
       <div className="mb-10">
         <h3 className="text-base font-semibold text-gray-700 mb-4">🔗 官方链接</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {refLinks.map((l) => <LinkCard key={l.id} link={l} />)}
+          {links.map((l) => <LinkCard key={l.id} link={l} />)}
         </div>
       </div>
 

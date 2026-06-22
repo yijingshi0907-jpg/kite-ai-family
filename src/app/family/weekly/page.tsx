@@ -1,5 +1,5 @@
-import { getCachedWeeklyUpdates } from "@/lib/family-fetcher";
-import type { XPost, WeeklyGroup } from "@/lib/family-fetcher";
+import { getWeeklyUpdates } from "@/lib/family-db";
+import type { XPost, WeeklyGroup } from "@/lib/family-db";
 import TwitterTimeline from "./TwitterTimeline";
 
 function PostCard({ post }: { post: XPost }) {
@@ -60,7 +60,7 @@ function WeekSection({ group }: { group: WeeklyGroup }) {
 }
 
 export default async function WeeklyPage() {
-  const groups = await getCachedWeeklyUpdates();
+  const groups = await getWeeklyUpdates();
 
   return (
     <section>
