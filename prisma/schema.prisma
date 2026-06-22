@@ -154,6 +154,7 @@ model FamilyWeeklyPost {
   weekLabel   String   // e.g. "2026 年 6 月 15 日 当周"
   date        String   // e.g. "2026-06-18"
   textZh      String
+  summaryZh   String?  // 1-2 sentence summary for display
   url         String
   mediaUrl    String?  // original URL (YouTube thumbnail or tweet image)
   likes       Int?

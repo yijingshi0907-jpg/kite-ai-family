@@ -37,8 +37,8 @@ function PostCard({ post }: { post: XPost }) {
           )}
         </div>
 
-        {/* Full post text */}
-        <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-line">{post.textZh}</p>
+        {/* Summary (or full text as fallback) */}
+        <p className="text-sm text-gray-800 leading-relaxed">{post.summaryZh ?? post.textZh}</p>
 
         {/* Footer */}
         <div className="mt-3 pt-3 border-t border-gray-50 flex items-center gap-3">

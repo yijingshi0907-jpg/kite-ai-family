@@ -16,6 +16,7 @@ export interface XPost {
   id: string;
   date: string;
   textZh: string;
+  summaryZh?: string;
   url: string;
   mediaUrl?: string;
   likes?: number;
@@ -38,6 +39,7 @@ export async function getWeeklyUpdates(): Promise<WeeklyGroup[]> {
       id: r.id,
       date: r.date,
       textZh: r.textZh,
+      summaryZh: r.summaryZh ?? undefined,
       url: r.url,
       mediaUrl: r.mediaUrl ? proxyImg(r.mediaUrl) : undefined,
       likes: r.likes ?? undefined,
