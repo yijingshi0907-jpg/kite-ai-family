@@ -1,6 +1,14 @@
 # /family-sync — Chi 家庭站 内容同步 & 部署
 
-Use this skill to add new weekly content, re-seed the database, and deploy to Vercel.
+Use this skill to add new weekly content, re-seed the database, and deploy.
+
+## Live site
+
+- **URL**: https://cz-family.zeabur.app/family
+- **Passcode**: `20260606` (visitors must enter this; 90-day cookie)
+- **Host**: Zeabur (Thailand / Aliyun region) — chosen for China accessibility (Vercel is unreliable in mainland China)
+- **Database**: PostgreSQL hosted **on Zeabur** (same project/region as the app)
+- **Repo**: https://github.com/yijingshi0907-jpg/kite-ai-family
 
 ## When to run
 
@@ -21,7 +29,7 @@ Ask the user for this week's new items. For each type, collect:
 - `textZh` — full Chinese post text
 - `summaryZh` — 1-2 sentence summary (write this yourself based on textZh)
 - `url` — X post URL or YouTube URL
-- `mediaUrl` — YouTube thumbnail URL if video (use maxresdefault.jpg format)
+- `mediaUrl` — YouTube thumbnail URL if video
 - `likes` — like count if notable (optional)
 
 **Interviews / AI on Air episodes** (new YouTube videos):
@@ -54,18 +62,37 @@ Write a `summaryZh` for every new weekly post. Keep it 1-2 sentences, factual, i
 
 ## Step 3 — Run database migration (only if schema changed)
 
-If the Prisma schema was changed:
-```bash
-DATABASE_URL="postgresql://neondb_owner:npg_fZm6TNYDFCg3@ep-wild-fog-atjnpxfs-pooler.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require" npx prisma db push
-npx prisma generate
+The seed/migration runs from your local machine against the Zeabur DB **public**
+connection string (the internal `.zeabur.internal` host only works from inside Zeabur).
+
+`prisma db push` needs `datasource.url` in `prisma.config.ts`. It is normally
+removed (it breaks the Zeabur build). To migrate, temporarily add it back:
+
+```ts
+// prisma.config.ts — TEMPORARY for migrations only
+import "dotenv/config";
+import { defineConfig } from "prisma/config";
+export default defineConfig({
+  schema: "prisma/schema.prisma",
+  datasource: { url: process.env.DATABASE_URL },
+});
 ```
+
+Then:
+```bash
+DATABASE_URL="postgresql://root:sne1ZR3945pB8yDYOkvM6FfhdVo0W7x2@47.81.30.93:32606/zeabur" npx prisma db push
+```
+
+**Revert `prisma.config.ts`** afterward (remove the datasource block) — otherwise the Zeabur build fails.
 
 ---
 
 ## Step 4 — Re-seed the database
 
+Seeding does NOT need the datasource in config — run directly with the public URL:
+
 ```bash
-DATABASE_URL="postgresql://neondb_owner:npg_fZm6TNYDFCg3@ep-wild-fog-atjnpxfs-pooler.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require" node prisma/seed-family.mjs
+DATABASE_URL="postgresql://root:sne1ZR3945pB8yDYOkvM6FfhdVo0W7x2@47.81.30.93:32606/zeabur" node prisma/seed-family.mjs
 ```
 
 Confirm output shows the expected counts (weekly posts, interviews, news, podcasts, ref links).
@@ -74,20 +101,24 @@ Confirm output shows the expected counts (weekly posts, interviews, news, podcas
 
 ## Step 5 — Commit and deploy
 
+Zeabur auto-deploys on every push to `main` (no CLI deploy needed):
+
 ```bash
 git add prisma/seed-family.mjs
 git commit -m "content: weekly sync YYYY-MM-DD — add N new posts"
 git push origin main
-npx vercel deploy --prod --yes
 ```
 
-Wait for "Aliased → kite-ai-family.vercel.app" in the output.
+Watch the build in **Zeabur → service → Deployments**. Wait for **Running**.
+
+> Note: Data lives in the DB, not the build. Re-seeding (Step 4) updates the live
+> site immediately — a redeploy is only needed for code/schema changes.
 
 ---
 
 ## Step 6 — Verify
 
-Open https://kite-ai-family.vercel.app/family/weekly and confirm:
+Open https://cz-family.zeabur.app/family/weekly (enter passcode if prompted) and confirm:
 - New week section appears at top
 - Summaries show correctly
 - Thumbnails load for video cards
@@ -100,29 +131,41 @@ Open https://kite-ai-family.vercel.app/family/weekly and confirm:
 |------|---------|
 | `prisma/seed-family.mjs` | All content data — edit this for updates |
 | `prisma/schema.prisma` | DB schema — edit if adding new fields |
+| `prisma.config.ts` | Prisma CLI config — keep datasource OUT for builds |
 | `src/lib/family-db.ts` | DB query functions + interfaces |
+| `src/lib/db.ts` | Prisma client (PrismaPg driver adapter) |
+| `src/app/family/layout.tsx` | Shell + passcode gate |
+| `src/app/family/PasscodeGate.tsx` | Passcode entry UI |
+| `src/app/api/family-auth/route.ts` | Passcode check → sets cookie |
 | `src/app/family/weekly/page.tsx` | Weekly posts page |
 | `src/app/family/personal/page.tsx` | Chi's interviews + news |
 | `src/app/family/company/page.tsx` | Press + Medium articles |
 | `src/app/family/links/page.tsx` | Podcasts + ref links |
-| `src/app/api/translate-page/route.ts` | Baidu translation proxy |
 | `src/app/api/image-proxy/route.ts` | YouTube thumbnail proxy |
 
-## Environment variables (Vercel production)
+## Environment variables (Zeabur — app service)
 
 | Variable | Value |
 |----------|-------|
-| `DATABASE_URL` | Neon PostgreSQL connection string |
-| `BAIDU_APP_ID` | `20260622002635864` |
-| `BAIDU_SECRET` | `pnxaDwi85aQpAiAs_edD` |
-| `NEXTAUTH_SECRET` | (set in Vercel) |
-| `GOOGLE_CLIENT_ID` | (set in Vercel) |
-| `GOOGLE_CLIENT_SECRET` | (set in Vercel) |
+| `DATABASE_URL` | `postgresql://root:...@postgresql.zeabur.internal:5432/zeabur` (internal host!) |
+| `NEXTAUTH_SECRET` | `AKJDO+Qtnn8DnPTkpqOIF12wazW9urcwCQT6WJ725QY=` |
+| `NEXTAUTH_URL` | `https://cz-family.zeabur.app` |
+| `AUTH_TRUST_HOST` | `true` (required by NextAuth v5 behind Zeabur proxy) |
+| `FAMILY_PASSCODE` | `20260606` |
 
-## Notes
+- **App** uses the **internal** DB host (`postgresql.zeabur.internal:5432`) — the public
+  IP is NOT reachable from inside Zeabur.
+- **Local migration/seed** uses the **public** host (`47.81.30.93:32606`).
 
-- YouTube thumbnails: always use `hqdefault.jpg` (not `maxresdefault.jpg` — often missing)
-- Weekly posts page is `force-dynamic` — always fetches fresh data from DB
-- Image proxy is public (no auth required)
-- Translation proxy uses Baidu API (5M chars/month free tier)
-- Binance Square and X.com posts cannot be auto-translated (JS-rendered, bot-protected)
+## Architecture notes
+
+- **Prisma 7** — `url` is NOT allowed in `schema.prisma`. Connection comes via the
+  `PrismaPg` driver adapter in `src/lib/db.ts` (`previewFeatures = ["driverAdapters"]`).
+- Pages that read the DB use `export const dynamic = "force-dynamic"`.
+- YouTube thumbnails: always use `hqdefault.jpg` (not `maxresdefault.jpg` — often missing).
+- Image proxy and `/family/*` are public routes (no Google login) — see `src/lib/auth.config.ts`.
+- Google / Slack / Dropbox auth and the Baidu translation proxy were **removed** — the
+  family site only needs the database. External article links go directly to the source
+  with "阅读原文 →".
+- Videos require a VPN in China (banner says 📺 观看视频需要翻墙). Bilibili re-uploads
+  are a future option once videos are posted there.
