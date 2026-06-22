@@ -17,10 +17,14 @@ const publisherColors: Record<string, string> = {
   "PayPal Ventures": "text-blue-600",
 };
 
+function baiduTranslate(url: string) {
+  return `https://fanyi.baidu.com/transpage?query=${encodeURIComponent(url)}&from=auto&to=zh&source=url&render=1`;
+}
+
 function PressCard({ article }: { article: PressArticle }) {
   const color = publisherColors[article.publisher] ?? "text-gray-600";
   return (
-    <a href={article.url} target="_blank" rel="noopener noreferrer"
+    <a href={baiduTranslate(article.url)} target="_blank" rel="noopener noreferrer"
       className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col group">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={article.imageUrl} alt={article.titleZh} className="w-full h-44 object-cover" />
@@ -31,7 +35,7 @@ function PressCard({ article }: { article: PressArticle }) {
         </div>
         <h2 className="text-sm font-bold text-gray-900 leading-snug mb-2">{article.titleZh}</h2>
         <p className="text-xs text-gray-500 leading-relaxed flex-1">{article.descZh}</p>
-        <span className="mt-4 text-xs text-rose-500 font-medium group-hover:underline">阅读原文 →</span>
+        <span className="mt-4 text-xs text-rose-500 font-medium group-hover:underline">🌐 阅读中文译文 →</span>
       </div>
     </a>
   );
@@ -39,7 +43,7 @@ function PressCard({ article }: { article: PressArticle }) {
 
 function MediumCard({ article }: { article: MediumArticle }) {
   return (
-    <a href={article.url} target="_blank" rel="noopener noreferrer"
+    <a href={baiduTranslate(article.url)} target="_blank" rel="noopener noreferrer"
       className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-5 flex gap-4 group items-start">
       <div className="w-10 h-10 rounded-xl bg-gray-900 flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">M</div>
       <div className="flex-1 min-w-0">

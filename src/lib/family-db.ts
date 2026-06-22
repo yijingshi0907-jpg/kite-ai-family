@@ -6,7 +6,8 @@ function proxyImg(url: string | null | undefined): string | undefined {
 }
 
 function ytProxy(youtubeId: string): string {
-  return proxyImg(`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`)!;
+  // hqdefault always exists; maxresdefault is missing for some videos
+  return proxyImg(`https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`)!;
 }
 
 // ── Weekly posts ─────────────────────────────────────────────────────────────

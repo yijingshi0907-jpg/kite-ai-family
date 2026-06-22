@@ -39,11 +39,15 @@ function InterviewCard({ post }: { post: PersonalUpdate }) {
   );
 }
 
+function baiduTranslate(url: string) {
+  return `https://fanyi.baidu.com/transpage?query=${encodeURIComponent(url)}&from=auto&to=zh&source=url&render=1`;
+}
+
 function NewsCard({ article }: { article: PersonalNewsArticle }) {
   const hasChineseTitle = article.titleZh && article.titleZh !== article.titleEn;
   const hasChineseDesc = article.descZh && !article.descZh.startsWith("（自动获取）");
   return (
-    <a href={article.url} target="_blank" rel="noopener noreferrer"
+    <a href={baiduTranslate(article.url)} target="_blank" rel="noopener noreferrer"
       className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-5 flex flex-col group">
       <div className="flex items-center gap-2 mb-3 flex-wrap">
         <span className="text-xs font-bold text-rose-500 uppercase tracking-wide">{article.publisher}</span>
@@ -68,7 +72,7 @@ function NewsCard({ article }: { article: PersonalNewsArticle }) {
       {hasChineseDesc && (
         <p className="text-xs text-gray-500 mt-2 leading-relaxed line-clamp-3">{article.descZh}</p>
       )}
-      <span className="mt-3 text-xs text-rose-500 group-hover:underline">阅读原文 →</span>
+      <span className="mt-3 text-xs text-rose-500 group-hover:underline">🌐 阅读中文译文 →</span>
     </a>
   );
 }
