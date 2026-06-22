@@ -10,6 +10,52 @@ Use this skill to add new weekly content, re-seed the database, and deploy.
 - **Database**: PostgreSQL hosted **on Zeabur** (same project/region as the app)
 - **Repo**: https://github.com/yijingshi0907-jpg/kite-ai-family
 
+---
+
+## Deployment options
+
+The app is a standard Next.js app and can run on either platform. Pick by audience.
+
+### Option A — Zeabur (CHINA / current production) ⭐
+
+Best when the audience is in **mainland China**. Vercel's `*.vercel.app` is
+intermittently blocked there; Zeabur supports Asia regions that are reachable.
+
+- **Region**: Thailand / Aliyun (Asia). For best mainland performance, a China
+  region is possible but requires an **ICP 备案** license.
+- **Database**: PostgreSQL **co-located in the same Zeabur project**. The app must
+  use the **internal** host (`postgresql.zeabur.internal:5432`); the public IP is
+  NOT reachable from inside Zeabur. Use the public host only for local seeding.
+- **Deploy**: auto-deploys on push to `main`. No CLI step.
+- **HTTPS**: automatic on the `*.zeabur.app` domain.
+- **Env vars** (Variable tab): `DATABASE_URL` (internal host), `NEXTAUTH_SECRET`,
+  `NEXTAUTH_URL=https://cz-family.zeabur.app`, `AUTH_TRUST_HOST=true`, `FAMILY_PASSCODE`.
+- **Live**: https://cz-family.zeabur.app/family
+
+### Option B — Vercel (GLOBAL / outside China)
+
+Best when the audience is **outside mainland China** (US, EU, etc.). Simplest
+Next.js hosting, fastest global CDN.
+
+- **Database**: any managed Postgres works — e.g. **Neon** (serverless, US/EU regions).
+  No co-location requirement; Vercel functions reach external DBs fine.
+  Example Neon URL: `postgresql://...@ep-...neon.tech/neondb?sslmode=require`
+- **Deploy**: `npx vercel deploy --prod --yes` (or auto-deploy via GitHub integration).
+- **HTTPS**: automatic on `*.vercel.app` and custom domains.
+- **Env vars** (Project Settings → Environment Variables): `DATABASE_URL` (Neon),
+  `NEXTAUTH_SECRET`, `NEXTAUTH_URL=https://<project>.vercel.app`, `FAMILY_PASSCODE`.
+  (`AUTH_TRUST_HOST` not needed on Vercel.)
+- **Note**: do NOT use a US-hosted DB with a China-region app server — the cross-region
+  hop fails. Match DB locality to the host (Vercel↔Neon US/EU; Zeabur↔Zeabur Asia DB).
+
+### Switching platforms — checklist
+
+1. Provision a DB reachable from the chosen host (co-located if China).
+2. Migrate schema + seed data into that DB (Steps 3–4 below) using its **public** URL.
+3. Set `DATABASE_URL` on the host to the **runtime** URL (internal for Zeabur).
+4. Set `NEXTAUTH_URL` to the new domain; add `AUTH_TRUST_HOST=true` on Zeabur only.
+5. Deploy and verify `/family` loads (Step 6).
+
 ## When to run
 
 - Every week when new posts appear on @KiteAIChinese / @GoKiteAI
