@@ -28,7 +28,7 @@ export default function FamilyLayout({ children }: { children: ReactNode }) {
         📺 观看视频需要翻墙 · 文章已提供中文译文
       </div>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+      <main className="max-w-6xl mx-auto px-3 sm:px-6 py-5 sm:py-8">
         {children}
       </main>
 

@@ -119,7 +119,7 @@ export default async function PersonalPage() {
   return (
     <section>
       {/* Profile card */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8 flex flex-col sm:flex-row gap-5 items-start">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6 mb-6 sm:mb-8 flex flex-col sm:flex-row gap-3 sm:gap-5 items-start">
         <div className="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center text-3xl flex-shrink-0">🌸</div>
         <div>
           <h3 className="font-bold text-gray-900 text-lg">Chi Zhang（张弛）</h3>
@@ -145,7 +145,7 @@ export default async function PersonalPage() {
           <span className="text-xs text-gray-400">{interviews.length} 条</span>
         </div>
         <p className="text-sm text-gray-500 mb-5">中英文媒体专访、播客对话 · 最新在前</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {interviews.map((u) => <InterviewCard key={u.id} post={u} />)}
         </div>
       </div>
@@ -158,7 +158,7 @@ export default async function PersonalPage() {
             <span className="text-xs text-gray-400">文章</span>
           </div>
           <p className="text-sm text-gray-500 mb-5">主流媒体对 Chi Zhang 的报道与人物专访</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {news.map((a) => <NewsCard key={a.id} article={a} />)}
           </div>
         </div>
@@ -175,7 +175,7 @@ export default async function PersonalPage() {
           <p className="text-sm text-gray-500 mb-5">
             Chi 主持的对话节目，嘉宾涵盖谷歌云、DeepMind、PayPal、Meta 等顶尖机构（共 {podcasts.length} 集）
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
             {remainingPodcasts.map((ep) => <PodcastCard key={ep.id} ep={ep} />)}
           </div>
         </div>

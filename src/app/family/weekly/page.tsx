@@ -67,7 +67,7 @@ function WeekSection({ group }: { group: WeeklyGroup }) {
         </span>
         <div className="h-px flex-1 bg-gray-200" />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
         {group.posts.map((p) => <PostCard key={p.id} post={p} />)}
       </div>
     </div>

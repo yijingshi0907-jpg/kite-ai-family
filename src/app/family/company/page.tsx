@@ -27,8 +27,8 @@ function PressCard({ article }: { article: PressArticle }) {
     <a href={translateUrl(article.url)} target="_blank" rel="noopener noreferrer"
       className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col group">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={article.imageUrl} alt={article.titleZh} className="w-full h-44 object-cover" />
-      <div className="p-5 flex flex-col flex-1">
+      <img src={article.imageUrl} alt={article.titleZh} className="w-full h-36 sm:h-44 object-cover" />
+      <div className="p-4 sm:p-5 flex flex-col flex-1">
         <div className="flex items-center justify-between mb-2">
           <p className={`text-xs font-bold uppercase tracking-wide ${color}`}>{article.publisher}</p>
           <p className="text-xs text-gray-400">{formatDateZh(article.date)}</p>
@@ -44,7 +44,7 @@ function PressCard({ article }: { article: PressArticle }) {
 function MediumCard({ article }: { article: MediumArticle }) {
   return (
     <a href={translateUrl(article.url)} target="_blank" rel="noopener noreferrer"
-      className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-5 flex gap-4 group items-start">
+      className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-4 sm:p-5 flex gap-3 sm:gap-4 group items-start">
       <div className="w-10 h-10 rounded-xl bg-gray-900 flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">M</div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
@@ -74,7 +74,7 @@ export default async function CompanyPage() {
       </div>
 
       {/* Company intro */}
-      <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-2xl p-6 mb-8">
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8">
         <div className="flex items-start gap-4 mb-4">
           <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-2xl flex-shrink-0">🪁</div>
           <div>
@@ -115,7 +115,7 @@ export default async function CompanyPage() {
           <a href="https://gokite.ai/media" target="_blank" rel="noopener noreferrer"
             className="text-xs text-rose-500 hover:underline">查看全部 →</a>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {press.map((a) => <PressCard key={a.id} article={a} />)}
         </div>
       </div>
