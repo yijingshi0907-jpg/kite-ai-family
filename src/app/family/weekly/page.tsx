@@ -2,6 +2,8 @@ import { getWeeklyUpdates } from "@/lib/family-db";
 import type { XPost, WeeklyGroup } from "@/lib/family-db";
 import TwitterTimeline from "./TwitterTimeline";
 
+export const dynamic = "force-dynamic";
+
 function PostCard({ post }: { post: XPost }) {
   const d = new Date(post.date);
   const dateStr = `${d.getFullYear()} 年 ${d.getMonth() + 1} 月 ${d.getDate()} 日`;
