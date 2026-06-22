@@ -29,9 +29,9 @@ export async function POST(req: NextRequest) {
   const signers = (signingRequest.signers as Array<{ email: string; name: string }>) ?? [];
   const signerEmails = signers.map((s) => s.email);
 
-  // Get user's configured Slack channel (from settings) or fall back to env
+  // Get user's configured Slack channel — use first channel in list, or fall back to env
   const settings = await db.userSettings.findUnique({ where: { userId: session.user.id } });
-  const channelId = settings?.slackChannelId ?? process.env.SLACK_CHANNEL_ID;
+  const channelId = settings?.slackChannelIds?.[0] ?? process.env.SLACK_CHANNEL_ID;
 
   try {
     const ts = await postSigningLink({

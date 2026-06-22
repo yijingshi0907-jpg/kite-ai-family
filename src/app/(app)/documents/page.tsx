@@ -6,13 +6,16 @@ export default async function DocumentsPage() {
   const session = await auth();
   const userId = session?.user?.id;
 
-  const docs = userId
-    ? await db.detectedDocument.findMany({
-        where: { userId, dismissed: false },
-        orderBy: { detectedAt: "desc" },
-        take: 100,
-      })
-    : [];
+  const [docs, settings] = await Promise.all([
+    userId
+      ? db.detectedDocument.findMany({
+          where: { userId, dismissed: false },
+          orderBy: { detectedAt: "desc" },
+          take: 100,
+        })
+      : [],
+    userId ? db.userSettings.findUnique({ where: { userId } }) : null,
+  ]);
 
   return (
     <div>
@@ -20,13 +23,13 @@ export default async function DocumentsPage() {
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">Detected Documents</h1>
           <p className="text-sm text-gray-500 mt-1">
-            Documents found in your Gmail and Drive matching signing keywords.
+            Documents found in your Gmail, Drive, and Slack matching signing keywords.
           </p>
         </div>
         <ScanButtons />
       </div>
 
-      <DocumentsClient docs={docs} />
+      <DocumentsClient docs={docs} defaultFolder={settings?.dropboxSignFolder ?? undefined} />
     </div>
   );
 }

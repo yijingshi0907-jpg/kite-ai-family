@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { DROPBOX_SIGN_FOLDERS } from "@/lib/constants";
 
 interface Signer {
   email: string;
@@ -10,12 +11,14 @@ interface Signer {
 interface Props {
   documentName: string;
   detectedDocId: string;
+  defaultFolder?: string;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export function SignerModal({ documentName, detectedDocId, onClose, onSuccess }: Props) {
+export function SignerModal({ documentName, detectedDocId, defaultFolder, onClose, onSuccess }: Props) {
   const [signers, setSigners] = useState<Signer[]>([{ email: "", name: "" }]);
+  const [folder, setFolder] = useState(defaultFolder ?? "");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
 
@@ -46,7 +49,7 @@ export function SignerModal({ documentName, detectedDocId, onClose, onSuccess }:
       const sendRes = await fetch("/api/signing/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ detectedDocId, signers }),
+        body: JSON.stringify({ detectedDocId, signers, folder: folder || undefined }),
       });
 
       const sendData = await sendRes.json();
@@ -54,17 +57,9 @@ export function SignerModal({ documentName, detectedDocId, onClose, onSuccess }:
         throw new Error(sendData.error ?? "Failed to send document");
       }
 
-      // Step 2: Notify Slack
-      const slackRes = await fetch("/api/signing/notify-slack", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ signingRequestId: sendData.signingRequestId }),
-      });
-
-      if (!slackRes.ok) {
-        const slackData = await slackRes.json();
-        // Don't fail the whole flow if Slack notify fails — just warn
-        console.warn("Slack notification failed:", slackData.error);
+      // Open the Dropbox Sign editor in a new tab for the user to prepare and send
+      if (sendData.claimUrl) {
+        window.open(sendData.claimUrl, "_blank", "noopener,noreferrer");
       }
 
       onSuccess();
@@ -84,6 +79,20 @@ export function SignerModal({ documentName, detectedDocId, onClose, onSuccess }:
         </div>
 
         <div className="px-6 py-4 space-y-3">
+          <div>
+            <label className="block text-xs font-medium text-gray-500 mb-1">Folder</label>
+            <select
+              value={folder}
+              onChange={(e) => setFolder(e.target.value)}
+              className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">No folder</option>
+              {DROPBOX_SIGN_FOLDERS.map((f) => (
+                <option key={f} value={f}>{f}</option>
+              ))}
+            </select>
+          </div>
+
           <p className="text-sm text-gray-600">Enter the signer(s) details:</p>
 
           {signers.map((signer, i) => (
@@ -140,7 +149,7 @@ export function SignerModal({ documentName, detectedDocId, onClose, onSuccess }:
             disabled={sending}
             className="bg-blue-600 text-white text-sm font-medium px-5 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50"
           >
-            {sending ? "Sending..." : "Send for Signing"}
+            {sending ? "Preparing..." : "Open in Dropbox Sign"}
           </button>
         </div>
       </div>

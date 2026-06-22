@@ -72,10 +72,12 @@ export default async function DashboardPage() {
                   className={`px-2 py-0.5 text-xs rounded-full font-medium ${
                     doc.source === "GMAIL"
                       ? "bg-red-50 text-red-600"
+                      : doc.source === "SLACK"
+                      ? "bg-purple-50 text-purple-600"
                       : "bg-blue-50 text-blue-600"
                   }`}
                 >
-                  {doc.source === "GMAIL" ? "Gmail" : "Drive"}
+                  {doc.source === "GMAIL" ? "Gmail" : doc.source === "SLACK" ? "Slack" : "Drive"}
                 </span>
                 <span className="text-sm text-gray-800 flex-1 truncate">{doc.fileName}</span>
                 {doc.subject && (

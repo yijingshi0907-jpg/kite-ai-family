@@ -1,19 +1,53 @@
 "use client";
 
 import { useState } from "react";
+import { DROPBOX_SIGN_FOLDERS } from "@/lib/constants";
 
 interface Props {
   initialDriveFolder: string;
   initialKeywords: string[];
+  initialSlackChannelIds: string[];
   userEmail: string;
+  initialDropboxFolder: string;
+  initialRequesterEmail: string;
+  initialCcEmail: string;
 }
 
-export function SettingsForm({ initialDriveFolder, initialKeywords, userEmail }: Props) {
+export function SettingsForm({
+  initialDriveFolder,
+  initialKeywords,
+  initialSlackChannelIds,
+  userEmail,
+  initialDropboxFolder,
+  initialRequesterEmail,
+  initialCcEmail,
+}: Props) {
   const [driveFolder, setDriveFolder] = useState(initialDriveFolder);
   const [keywords, setKeywords] = useState(initialKeywords.join(", "));
+  const [slackChannels, setSlackChannels] = useState<string[]>(
+    initialSlackChannelIds.length > 0 ? initialSlackChannelIds : ["C0ARANHAXEV"]
+  );
+  const [dropboxFolder, setDropboxFolder] = useState(initialDropboxFolder);
+  const [requesterEmail, setRequesterEmail] = useState(initialRequesterEmail);
+  const [ccEmail, setCcEmail] = useState(initialCcEmail);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
+
+  function addChannel() {
+    if (slackChannels.length >= 10) return;
+    setSlackChannels([...slackChannels, ""]);
+  }
+
+  function removeChannel(index: number) {
+    setSlackChannels(slackChannels.filter((_, i) => i !== index));
+  }
+
+  function updateChannel(index: number, value: string) {
+    const updated = [...slackChannels];
+    updated[index] = value;
+    setSlackChannels(updated);
+  }
 
   async function handleSave() {
     setSaving(true);
@@ -25,10 +59,19 @@ export function SettingsForm({ initialDriveFolder, initialKeywords, userEmail }:
       .map((k) => k.trim().toLowerCase())
       .filter(Boolean);
 
+    const slackChannelIds = slackChannels.map((c) => c.trim()).filter(Boolean);
+
     const res = await fetch("/api/settings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ driveMonitorFolder: driveFolder, keywordsList }),
+      body: JSON.stringify({
+        driveMonitorFolder: driveFolder,
+        keywordsList,
+        slackChannelIds,
+        dropboxSignFolder: dropboxFolder,
+        dropboxSignRequesterEmail: requesterEmail,
+        dropboxSignCcEmail: ccEmail,
+      }),
     });
 
     setSaving(false);
@@ -44,12 +87,54 @@ export function SettingsForm({ initialDriveFolder, initialKeywords, userEmail }:
 
   return (
     <>
+      {/* Slack Channels */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <h2 className="text-base font-medium text-gray-900 mb-1">Slack Channels</h2>
+        <p className="text-sm text-gray-500 mb-1">
+          Add the channel IDs you want to monitor. The bot must be invited to each channel first.
+        </p>
+        <p className="text-xs text-gray-400 mb-4">
+          Find a channel ID: right-click channel in Slack → <em>View channel details</em> → scroll to bottom.
+          Looks like <code className="bg-gray-100 px-1 py-0.5 rounded">C0ARANHAXEV</code>.
+        </p>
+
+        <div className="space-y-2">
+          {slackChannels.map((channelId, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <input
+                type="text"
+                placeholder="Leave blank to scan entire workspace"
+                value={channelId}
+                onChange={(e) => updateChannel(i, e.target.value)}
+                className="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                onClick={() => removeChannel(i)}
+                disabled={slackChannels.length === 1}
+                className="text-gray-400 hover:text-red-500 disabled:opacity-30 text-lg leading-none px-1"
+                title="Remove"
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <button
+          onClick={addChannel}
+          disabled={slackChannels.length >= 10}
+          className="mt-3 text-sm text-blue-600 hover:underline disabled:opacity-40"
+        >
+          + Add another channel
+        </button>
+      </div>
+
       {/* Google Drive */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h2 className="text-base font-medium text-gray-900 mb-1">Google Drive Folder</h2>
         <p className="text-sm text-gray-500 mb-4">
-          Files added to this folder will be monitored for signing keywords.
-          Paste the folder ID from the Drive URL:{" "}
+          Files added to this folder will be monitored for signing keywords. Paste the folder
+          ID from the Drive URL:{" "}
           <code className="text-xs bg-gray-100 px-1 py-0.5 rounded">
             drive.google.com/drive/folders/<strong>FOLDER_ID</strong>
           </code>
@@ -67,7 +152,7 @@ export function SettingsForm({ initialDriveFolder, initialKeywords, userEmail }:
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h2 className="text-base font-medium text-gray-900 mb-1">Detection Keywords</h2>
         <p className="text-sm text-gray-500 mb-4">
-          Emails and Drive files containing these words (in subject AND body) will be flagged.
+          Emails, Drive files, and Slack messages containing these words will be flagged.
           Comma-separated.
         </p>
         <input
@@ -87,6 +172,61 @@ export function SettingsForm({ initialDriveFolder, initialKeywords, userEmail }:
                 {kw}
               </span>
             ))}
+        </div>
+      </div>
+
+      {/* Dropbox Sign */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <h2 className="text-base font-medium text-gray-900 mb-1">Dropbox Sign</h2>
+        <p className="text-sm text-gray-500 mb-4">
+          Configure how documents are filed in your company&apos;s Dropbox Sign account.
+        </p>
+
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Default Folder</label>
+            <select
+              value={dropboxFolder}
+              onChange={(e) => setDropboxFolder(e.target.value)}
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">No default</option>
+              {DROPBOX_SIGN_FOLDERS.map((f) => (
+                <option key={f} value={f}>{f}</option>
+              ))}
+            </select>
+            <p className="text-xs text-gray-400 mt-1">
+              Documents will be tagged with this folder in Dropbox Sign. Can be overridden per document.
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Company Requester Email</label>
+            <input
+              type="email"
+              value={requesterEmail}
+              onChange={(e) => setRequesterEmail(e.target.value)}
+              placeholder="e.g. legal@company.com"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <p className="text-xs text-gray-400 mt-1">
+              Recorded in document metadata as the company requester.
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">CC Email on Completion</label>
+            <input
+              type="email"
+              value={ccEmail}
+              onChange={(e) => setCcEmail(e.target.value)}
+              placeholder="e.g. legal@company.com"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <p className="text-xs text-gray-400 mt-1">
+              This email will receive a copy of the signed document when signing completes.
+            </p>
+          </div>
         </div>
       </div>
 

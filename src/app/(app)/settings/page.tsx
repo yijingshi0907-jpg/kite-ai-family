@@ -1,12 +1,23 @@
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { SettingsForm } from "./SettingsForm";
+import { SlackConnect } from "./SlackConnect";
+import { DropboxConnect } from "./DropboxConnect";
 
-export default async function SettingsPage() {
+export default async function SettingsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ slack_connected?: string; slack_error?: string; dropbox_connected?: string; dropbox_error?: string }>;
+}) {
   const session = await auth();
-  const settings = session?.user?.id
-    ? await db.userSettings.findUnique({ where: { userId: session.user.id } })
-    : null;
+  const userId = session?.user?.id;
+
+  const [settings, user] = await Promise.all([
+    userId ? db.userSettings.findUnique({ where: { userId } }) : null,
+    userId ? db.user.findUnique({ where: { id: userId }, select: { slackToken: true, dropboxToken: true } }) : null,
+  ]);
+
+  const params = await searchParams;
 
   return (
     <div>
@@ -18,23 +29,29 @@ export default async function SettingsPage() {
       </div>
 
       <div className="space-y-6 max-w-2xl">
-        {/* Slack — coming in Phase 3 */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 opacity-60">
-          <h2 className="text-base font-medium text-gray-900 mb-1">Slack</h2>
-          <p className="text-sm text-gray-500 mb-4">
-            Connect Slack to receive signing links and monitor channels for documents.
-          </p>
-          <div className="flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-gray-300" />
-            <span className="text-sm text-gray-500">Coming soon</span>
-          </div>
-        </div>
+        {/* Slack Account Connection */}
+        <SlackConnect
+          isConnected={!!user?.slackToken}
+          flashSuccess={params.slack_connected === "1"}
+          flashError={params.slack_error}
+        />
 
-        {/* Interactive settings form */}
+        {/* Dropbox Storage Connection */}
+        <DropboxConnect
+          isConnected={!!user?.dropboxToken}
+          initialSaveFolder={settings?.dropboxSaveFolder ?? ""}
+          flashSuccess={params.dropbox_connected === "1"}
+          flashError={params.dropbox_error}
+        />
+
         <SettingsForm
           initialDriveFolder={settings?.driveMonitorFolder ?? ""}
           initialKeywords={settings?.keywordsList ?? ["sign", "contract", "agreement"]}
+          initialSlackChannelIds={settings?.slackChannelIds ?? []}
           userEmail={session?.user?.email ?? ""}
+          initialDropboxFolder={settings?.dropboxSignFolder ?? ""}
+          initialRequesterEmail={settings?.dropboxSignRequesterEmail ?? "yijing.shi@zettablock.com"}
+          initialCcEmail={settings?.dropboxSignCcEmail ?? ""}
         />
       </div>
     </div>

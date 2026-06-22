@@ -55,6 +55,8 @@ function InterviewCard({ post }: { post: PersonalUpdate }) {
 }
 
 function NewsCard({ article }: { article: PersonalNewsArticle }) {
+  const hasChineseTitle = article.titleZh && article.titleZh !== article.titleEn;
+  const hasChineseDesc = article.descZh && !article.descZh.startsWith("（自动获取）");
   return (
     <a
       href={article.url}
@@ -62,15 +64,29 @@ function NewsCard({ article }: { article: PersonalNewsArticle }) {
       rel="noopener noreferrer"
       className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-5 flex flex-col group"
     >
-      <div className="flex items-center gap-2 mb-3">
+      <div className="flex items-center gap-2 mb-3 flex-wrap">
         <span className="text-xs font-bold text-rose-500 uppercase tracking-wide">{article.publisher}</span>
         <span className="text-gray-300">·</span>
         <span className="text-xs text-gray-400">{formatDateZh(article.date)}</span>
+        {!hasChineseTitle && (
+          <span className="ml-auto text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">英文原文</span>
+        )}
       </div>
-      <h3 className="text-sm font-bold text-gray-900 leading-snug flex-1 group-hover:text-rose-600 transition-colors">
-        {article.titleZh}
-      </h3>
-      <p className="text-xs text-gray-500 mt-2 leading-relaxed line-clamp-2">{article.descZh}</p>
+      {hasChineseTitle ? (
+        <>
+          <h3 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-rose-600 transition-colors">
+            {article.titleZh}
+          </h3>
+          <p className="text-xs text-gray-400 mt-1 leading-snug line-clamp-2 italic">{article.titleEn}</p>
+        </>
+      ) : (
+        <h3 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-rose-600 transition-colors">
+          {article.titleEn}
+        </h3>
+      )}
+      {hasChineseDesc && (
+        <p className="text-xs text-gray-500 mt-2 leading-relaxed line-clamp-3">{article.descZh}</p>
+      )}
       <span className="mt-3 text-xs text-rose-500 group-hover:underline">阅读原文 →</span>
     </a>
   );
@@ -92,10 +108,9 @@ export default async function PersonalPage() {
     (a, b) => b.date.localeCompare(a.date)
   );
 
-  // Merge static + live news articles, deduplicate by URL
-  const staticNewsUrls = new Set(staticNews.map((n) => n.url));
-  const newLiveNews = liveNews.filter((n) => !staticNewsUrls.has(n.url) && n.date);
-  const allNews = [...newLiveNews, ...staticNews].sort((a, b) => b.date.localeCompare(a.date));
+  // Only show static articles (which have proper Chinese translations).
+  // Auto-fetched Google News results are English-only so excluded here.
+  const allNews = [...staticNews].sort((a, b) => b.date.localeCompare(a.date));
 
   // Remaining AI on Air episodes not already featured in interviews
   const featuredIds = new Set(allInterviews.map((u) => u.youtubeId).filter(Boolean));
@@ -113,8 +128,7 @@ export default async function PersonalPage() {
           <h3 className="font-bold text-gray-900 text-lg">Chi Zhang（张弛）</h3>
           <p className="text-sm text-rose-500 font-medium mb-2">Kite AI 联合创始人 &amp; CEO</p>
           <p className="text-sm text-gray-600 leading-relaxed">
-            曾任职于 Databricks、Uber，毕业于 UC Berkeley，Forbes 30 Under 30 得主。正在构建 AI 代理经济时代的身份与支付基础设施——Kite AI。
-            主持 AI on Air 系列播客，接受多家中英文媒体专访，深度分享代理支付的愿景与实践。
+            UC Berkeley PhD。正在构建 AI 代理经济时代的身份与支付基础设施——Kite AI。 接受多家中英文媒体专访，深度分享代理支付的愿景与实践。
           </p>
           <div className="flex flex-wrap gap-2 mt-3">
             <a href="https://x.com/GoKiteAI" target="_blank" rel="noopener noreferrer"

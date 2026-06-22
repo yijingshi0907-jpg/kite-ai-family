@@ -24,16 +24,19 @@ enum DocumentSource {
 }
 
 model User {
-  id            String   @id @default(cuid())
-  email         String   @unique
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime?
   name          String?
   image         String?
-  googleToken   String?
-  googleRefresh String?
-  slackToken    String?
-  slackTeamId   String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  googleToken     String?
+  googleRefresh   String?
+  slackToken      String?
+  slackTeamId     String?
+  dropboxToken    String?
+  dropboxRefresh  String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   accounts        Account[]
   sessions        Session[]
@@ -79,14 +82,17 @@ model VerificationToken {
 }
 
 model UserSettings {
-  id                 String   @id @default(cuid())
-  userId             String   @unique
-  slackChannelId     String?
-  slackChannelName   String?
-  driveMonitorFolder String?
-  keywordsList       String[] @default(["sign", "contract", "agreement"])
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  id                        String   @id @default(cuid())
+  userId                    String   @unique
+  slackChannelIds           String[] @default([])
+  driveMonitorFolder        String?
+  keywordsList              String[] @default(["sign", "contract", "agreement"])
+  dropboxSignFolder         String?
+  dropboxSignRequesterEmail String?
+  dropboxSignCcEmail        String?
+  dropboxSaveFolder         String?   // Dropbox storage folder path for saving signed docs
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

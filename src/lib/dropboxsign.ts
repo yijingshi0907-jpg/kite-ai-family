@@ -1,14 +1,14 @@
 import {
-  SignatureRequestApi,
-  SignatureRequestSendRequest,
-  SubSignatureRequestSigner,
+  UnclaimedDraftApi,
+  UnclaimedDraftCreateRequest,
+  SubUnclaimedDraftSigner,
 } from "@dropbox/sign";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 
 function getApi() {
-  const api = new SignatureRequestApi();
+  const api = new UnclaimedDraftApi();
   api.username = process.env.DROPBOX_SIGN_API_KEY ?? "";
   return api;
 }
@@ -18,52 +18,65 @@ export interface Signer {
   name: string;
 }
 
-export interface SigningResult {
+export interface EnterpriseOptions {
+  folder?: string;
+  requesterEmail?: string;
+  ccEmails?: string[];
+}
+
+export interface EmbeddedDraftResult {
   signatureRequestId: string;
-  signingUrl: string | null;
+  claimUrl: string;
 }
 
 /**
- * Send a document to Dropbox Sign for signing.
- * Writes the file to a temp path (SDK requires a ReadStream).
+ * Create an unclaimed draft in Dropbox Sign.
+ * Returns a claimUrl the requester opens in the Dropbox Sign web UI
+ * to place signature fields, configure signers, and send.
+ * Does NOT require DROPBOX_SIGN_CLIENT_ID.
  */
-export async function createSigningRequest(
+export async function createEmbeddedDraft(
   documentName: string,
   fileBuffer: Buffer,
   signers: Signer[],
-  subject?: string
-): Promise<SigningResult> {
+  subject?: string,
+  enterprise?: EnterpriseOptions
+): Promise<EmbeddedDraftResult> {
   const api = getApi();
 
-  // Write buffer to temp file (SDK needs a ReadStream)
   const tmpPath = path.join(os.tmpdir(), `signing-${Date.now()}.pdf`);
   fs.writeFileSync(tmpPath, fileBuffer);
 
   try {
-    const signerList: SubSignatureRequestSigner[] = signers.map((s, i) => ({
+    const signerList: SubUnclaimedDraftSigner[] = signers.map((s, i) => ({
       emailAddress: s.email,
       name: s.name,
       order: i,
     }));
 
-    const data: SignatureRequestSendRequest = {
-      title: documentName,
+    const metadata: Record<string, string> = {};
+    if (enterprise?.folder) metadata.folder = enterprise.folder;
+    if (enterprise?.requesterEmail) metadata.requesterEmail = enterprise.requesterEmail;
+
+    const data: UnclaimedDraftCreateRequest = {
+      type: UnclaimedDraftCreateRequest.TypeEnum.RequestSignature,
       subject: subject ?? `Please sign: ${documentName}`,
       message: "Please review and sign this document at your earliest convenience.",
       signers: signerList,
       files: [fs.createReadStream(tmpPath)],
       testMode: process.env.NODE_ENV !== "production",
+      ...(enterprise?.ccEmails?.length ? { ccEmailAddresses: enterprise.ccEmails } : {}),
+      ...(Object.keys(metadata).length ? { metadata } : {}),
     };
 
-    const response = await api.signatureRequestSend(data);
-    const req = response.body.signatureRequest;
+    const response = await api.unclaimedDraftCreate(data);
+    const draft = response.body.unclaimedDraft;
 
     return {
-      signatureRequestId: req?.signatureRequestId ?? "",
-      signingUrl: req?.signingUrl ?? null,
+      signatureRequestId: draft?.signatureRequestId ?? "",
+      claimUrl: draft?.claimUrl ?? "",
     };
   } finally {
-    // Clean up temp file
     try { fs.unlinkSync(tmpPath); } catch {}
   }
 }

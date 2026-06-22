@@ -55,7 +55,7 @@ export default async function LinksPage() {
 
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-base font-semibold text-gray-700">🎙️ AI on Air 全集（{episodes.length} 集）</h3>
+          <h3 className="text-base font-semibold text-gray-700">🎙️ AI on Air 全集</h3>
           <a href="https://gokite.ai/podcast" target="_blank" rel="noopener noreferrer"
             className="text-xs text-rose-500 hover:underline">官网查看 →</a>
         </div>

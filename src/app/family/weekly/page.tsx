@@ -5,22 +5,38 @@ import TwitterTimeline from "./TwitterTimeline";
 function PostCard({ post }: { post: XPost }) {
   const d = new Date(post.date);
   const dateStr = `${d.getMonth() + 1}月${d.getDate()}日`;
+  const isYouTube = post.url.includes("youtube.com") || post.url.includes("youtu.be");
   return (
     <a href={post.url} target="_blank" rel="noopener noreferrer"
       className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden group block">
+      {post.mediaUrl && (
+        <div className="relative w-full aspect-video bg-gray-100">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={post.mediaUrl} alt={post.textZh} className="w-full h-full object-cover" />
+          {isYouTube && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/35 transition-colors">
+              <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                <span className="text-white text-sm ml-0.5">▶</span>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
       <div className="p-4">
         <div className="flex items-center gap-2 mb-2">
           <div className="w-6 h-6 rounded-full bg-gray-900 flex items-center justify-center flex-shrink-0">
             <span className="text-white text-xs font-bold">𝕏</span>
           </div>
-          <span className="text-xs text-gray-500 font-medium">@GoKiteAI</span>
+          <span className="text-xs text-gray-500 font-medium">@KiteAIChinese</span>
           <span className="text-xs text-gray-400 ml-auto">{dateStr}</span>
         </div>
         <p className="text-sm text-gray-800 leading-relaxed">{post.textZh}</p>
         {post.likes && (
           <p className="text-xs text-gray-400 mt-2">❤ {post.likes.toLocaleString()}</p>
         )}
-        <span className="mt-2 inline-block text-xs text-rose-500 group-hover:underline">在 X 查看 →</span>
+        <span className="mt-2 inline-block text-xs text-rose-500 group-hover:underline">
+          {isYouTube ? "▶ 观看视频 →" : "在 X 查看 →"}
+        </span>
       </div>
     </a>
   );
@@ -58,19 +74,36 @@ export default async function WeeklyPage() {
         </p>
       </div>
 
-      {/* Live Twitter timeline — shows ALL real posts with real images */}
+      {/* Live Twitter timelines — shows ALL real posts with real images */}
       <div className="mb-10">
         <div className="flex items-center justify-between mb-3">
           <div>
             <h3 className="text-base font-semibold text-gray-800">🔴 实时 X 动态</h3>
             <p className="text-xs text-gray-400 mt-0.5">完整推文 · 原图 · 实时更新</p>
           </div>
-          <a href="https://x.com/GoKiteAI" target="_blank" rel="noopener noreferrer"
-            className="text-xs px-3 py-1.5 bg-gray-900 text-white rounded-full hover:bg-gray-700 transition-colors">
-            去关注 @GoKiteAI
-          </a>
         </div>
-        <TwitterTimeline />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-sm font-medium text-gray-700">🌐 英文官方 @GoKiteAI</p>
+              <a href="https://x.com/GoKiteAI" target="_blank" rel="noopener noreferrer"
+                className="text-xs px-2 py-1 bg-gray-900 text-white rounded-full hover:bg-gray-700 transition-colors">
+                去关注
+              </a>
+            </div>
+            <TwitterTimeline account="GoKiteAI" />
+          </div>
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-sm font-medium text-gray-700">🇨🇳 中文官方 @KiteAIChinese</p>
+              <a href="https://x.com/KiteAIChinese" target="_blank" rel="noopener noreferrer"
+                className="text-xs px-2 py-1 bg-gray-900 text-white rounded-full hover:bg-gray-700 transition-colors">
+                去关注
+              </a>
+            </div>
+            <TwitterTimeline account="KiteAIChinese" />
+          </div>
+        </div>
       </div>
 
       {/* Curated weekly highlights in Chinese */}

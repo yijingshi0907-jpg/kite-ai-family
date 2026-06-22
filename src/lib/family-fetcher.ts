@@ -95,6 +95,26 @@ const KITE_YT_CHANNEL_ID = "UCZ7OYTGcXA93faGcmnyjTzw";
 
 export const chiNewsArticles: PersonalNewsArticle[] = [
   {
+    id: "news-panews-chi",
+    tag: "personal",
+    publisher: "PANews",
+    date: "2025-11-25",
+    titleEn: "Interview with Kite AI: How to build a unified framework for payment, identity, and governance for AI agents?",
+    titleZh: "专访 Kite AI：如何为 AI 代理构建统一的支付、身份与治理框架？",
+    descZh: "PANews 专访 Chi Zhang，深度探讨 Kite 为何将支付、身份认证与治理三大能力统一在同一框架下，以及这一架构决策背后的技术逻辑与商业判断。",
+    url: "https://www.panewslab.com/zh/articledetails/kite-ai-interview.html",
+  },
+  {
+    id: "news-binance-chi",
+    tag: "personal",
+    publisher: "Binance",
+    date: "2025-12-15",
+    titleEn: "The Invisible Infrastructure: How Kite AI is Building the Rails of the Agentic Economy",
+    titleZh: "隐形基础设施：Kite AI 如何为代理经济铺设底层轨道",
+    descZh: "Binance 深度报道，解析 Kite AI 如何在幕后构建支撑代理经济运转的关键支付与身份基础设施，以及这一『隐形基础设施』为何将成为 AI 时代的核心竞争优势。",
+    url: "https://www.binance.com/en/square/post/18083688931529",
+  },
+  {
     id: "news-thestreet-chi",
     tag: "personal",
     publisher: "TheStreet Crypto",
@@ -103,6 +123,26 @@ export const chiNewsArticles: PersonalNewsArticle[] = [
     titleZh: "Kite CEO Chi Zhang：AI 代理、身份认证与支付将驱动 AI 经济下一阶段",
     descZh: "TheStreet Crypto 专访 Chi Zhang，她分享了自主 AI 代理时代的技术愿景：为什么代理需要专属的身份层与支付基础设施，以及 Kite 如何填补这一关键缺口。",
     url: "https://www.thestreet.com/crypto/innovation/kite-ceo-agents-identity-and-payments-will-power-the-next-phase-of-the-ai-economy",
+  },
+  {
+    id: "news-fortune-chi",
+    tag: "personal",
+    publisher: "Fortune",
+    date: "2025-09-02",
+    titleEn: "Exclusive: PayPal and General Catalyst lead $18 million investment in AI blockchain startup Kite",
+    titleZh: "独家：PayPal 与 General Catalyst 领投 Kite AI 1800 万美元——一家将 AI 代理与区块链支付融合的初创公司",
+    descZh: "Fortune 杂志独家报道，PayPal 与 General Catalyst 联合领投 Kite AI 的 A 轮融资，本次融资将加速 AI 代理身份认证与支付基础设施的构建。Chi Zhang 亲述创业故事与技术愿景。",
+    url: "https://fortune.com/crypto/2025/09/02/kite-ai-blockchain-paypal-general-catalyst-18-million/",
+  },
+  {
+    id: "news-coindesk-chi",
+    tag: "personal",
+    publisher: "CoinDesk",
+    date: "2025-09-02",
+    titleEn: "Kite Raises $18M to Bridge Stablecoin Payments and Autonomous Agents",
+    titleZh: "Kite 融资 1800 万美元，打通稳定币支付与自主 AI 代理",
+    descZh: "CoinDesk 报道，Kite AI 完成 1800 万美元 A 轮融资，旨在为自主 AI 代理构建链上支付轨道。Chi Zhang 表示，稳定币是代理原生支付的理想货币形式，Kite 正在填补这一基础设施空白。",
+    url: "https://www.coindesk.com/business/2025/09/02/kite-raises-usd18m-to-bridge-stablecoin-payments-and-autonomous-agents",
   },
   {
     id: "news-iqwiki-chi",
@@ -572,6 +612,39 @@ export const personalUpdates: PersonalUpdate[] = [
     sourceUrl: "https://www.youtube.com/watch?v=ozq2mhy9mE0",
   },
   {
+    id: "chi-aionair-12",
+    tag: "personal",
+    type: "interview",
+    date: "2026-02-05",
+    titleZh: "AI on Air 第 12 集 | 探索代理金融与 x402 协议",
+    bodyZh:
+      "Chi 与 pieverse 联合创始人 Colin Ho 深入探讨代理金融的核心协议——x402 如何让 AI 代理在链上完成无摩擦的微支付，以及多协议互操作的未来。",
+    youtubeId: "0JzWEb6cQ34",
+    sourceUrl: "https://youtu.be/0JzWEb6cQ34",
+  },
+  {
+    id: "chi-aionair-11",
+    tag: "personal",
+    type: "interview",
+    date: "2026-01-22",
+    titleZh: "AI on Air 第 11 集 | 以 x402 协议大规模驱动代理支付",
+    bodyZh:
+      "Chi 对话 Coinbase Ventures 投资人 Jonathan King，深入探讨 x402 协议如何成为代理支付的行业标准，以及 Coinbase 看好 Kite 生态的核心逻辑。",
+    youtubeId: "ERUp4hVxH-I",
+    sourceUrl: "https://www.youtube.com/watch?v=ERUp4hVxH-I",
+  },
+  {
+    id: "chi-aionair-10",
+    tag: "personal",
+    type: "interview",
+    date: "2026-01-08",
+    titleZh: "AI on Air 第 10 集 | 证明、支付与代理未来",
+    bodyZh:
+      "Chi 与 Brevis CEO Michael Dong 对话，探讨零知识证明如何为代理支付提供可验证的信任层，以及链上证明技术在代理经济中的关键作用。",
+    youtubeId: "OPX2QC9R7CY",
+    sourceUrl: "https://www.youtube.com/watch?v=OPX2QC9R7CY",
+  },
+  {
     id: "chi-aionair-9",
     tag: "personal",
     type: "interview",
@@ -636,35 +709,168 @@ export const personalUpdates: PersonalUpdate[] = [
 
 export const weeklyUpdates: WeeklyGroup[] = [
   {
-    weekOf: "2026-06-09",
-    weekLabelZh: "2026 年 6 月 9 日 当周",
+    weekOf: "2026-06-15",
+    weekLabelZh: "2026 年 6 月 15 日 当周",
     posts: [
       {
-        id: "x-2026-0611-1",
-        date: "2026-06-11",
-        textEn: "Chi Zhang on BlockHash Podcast Ep. 742: Why stablecoins are the ideal programmable money for autonomous agents and how Kite Passport solves identity and governance.",
-        textZh: "Chi 做客 BlockHash 播客第 742 集：为什么稳定币是 AI 代理的理想可编程货币，以及 Kite Passport 如何解决身份认证与治理问题。",
-        url: "https://www.youtube.com/watch?v=se1HXCqNC7E",
+        id: "x-cn-0615-1",
+        date: "2026-06-15",
+        textEn: "Kite Weekly: AI on Air Ep 17 is live! @hashed_official Open Finance CEO @harryhojinkim joins Chi to explore sovereign agent finance — why Korea could emerge as a hub for AI agents, KRW stablecoins, compliance, and machine-native payments.",
+        textZh: "Kite 正在通过关于主权金融的全球对话、务实的生态合作伙伴关系以及社区驱动的建设，推动 agentic 商业的发展。以下是本周工作进展：① AI on Air 第 17 集正式上线，对话 @hashed_official Open Finance CEO @harryhojinkim，共同探讨韩国为何可能成为 AI agents、韩元 stablecoin 及机器原生支付的重要据点。",
+        url: "https://x.com/KiteAIChinese",
       },
       {
-        id: "x-2026-0612-1",
-        date: "2026-06-12",
-        textEn: "Kite x SMBC Nikko and Hatapro: Demonstrating Agentic Payments for Travel in Japan. AI agents discover, reserve, and pay for local Japanese experiences autonomously within a preset budget.",
-        textZh: "Kite 与 SMBC Nikko & Hatapro 合资项目：AI 代理在日本旅行场景中自主发现、预约并完成支付——在用户预设预算内全流程完成。",
-        url: "https://medium.com/@KiteAI/kite-and-the-jv-of-smbc-nikko-and-hatapro-proof-of-japan-demonstrate-agentic-payments-for-travel-6cfc4bc4ee13",
+        id: "x-cn-0616-1",
+        date: "2026-06-16",
+        textEn: "「The Agentic Economy: Payments, Commerce & AI-Native Platforms」gathered builders, investors and operators in San Francisco to discuss what foundational infrastructure must be in place before Agentic Commerce can truly scale. Hosted by EntreConnect, Kite and AWS Builder Loft.",
+        textZh: "「The Agentic Economy: Payments, Commerce & AI-Native Platforms」在旧金山汇聚了 builders、investors 与 operators，共同讨论 Agentic Commerce 真正规模化之前，需要哪些底层基础设施。活动由 EntreConnect、Kite 与 AWS Builder Loft 主办，讨论嘉宾覆盖 payments、commerce 等核心领域。",
+        url: "https://x.com/KiteAIChinese",
+      },
+      {
+        id: "x-cn-0617-1",
+        date: "2026-06-17",
+        textEn: "Autonomous Agents need more than payment rails — they need trust, compliance, and risk intelligence built into the transaction layer. @CrystalPlatform is bringing blockchain compliance into Kite's Agent Economy via Crystal Expert, integrated into Kite's agentic payment infrastructure.",
+        textZh: "自主 Agent 需要的不只是支付轨道，还需要内建于交易层的信任、合规与风险情报。我们很高兴分享：@CrystalPlatform 正通过 Crystal Expert，将区块链合规能力带入 Kite 的 Agent 经济，并集成进 Kite 的 agentic payment infrastructure。这项合作将进一步强化面向 agentic payment flows 的合规保障。",
+        url: "https://x.com/KiteAIChinese",
+      },
+      {
+        id: "x-cn-0622-1",
+        date: "2026-06-22",
+        textEn: "Over the past two weeks, we delivered a security layer for Kite Passport — wrapping 'authentication, recovery, and spending controls' around every Agent action. The most dangerous thing in Agentic payments isn't the transfer itself — it's everything that must be established before the transfer happens.",
+        textZh: "过去两周，我们为 Kite Passport 交付了一层安全机制：把「验证、恢复、花费控制」包裹到 Agent 的每一个动作上。Agentic 支付里最危险的从来不是转账本身，而是转账发生前需要成立的一切前提。① 动作级（action-bound）Passkey 二次验证；② 钱包转账、Agent session 绑定。",
+        url: "https://x.com/KiteAIChinese",
       },
     ],
   },
   {
-    weekOf: "2026-05-26",
-    weekLabelZh: "2026 年 5 月 26 日 当周",
+    weekOf: "2026-06-08",
+    weekLabelZh: "2026 年 6 月 8 日 当周",
     posts: [
       {
-        id: "x-2026-0527-1",
-        date: "2026-05-27",
-        textEn: "Building Omnichain Apps on Kite: Agent-Native Cross-Chain Execution — our tech team's latest deep dive into the future of agentic infrastructure.",
-        textZh: "在 Kite 上构建全链应用：代理原生的跨链执行——技术团队最新深度解析，探索代理基础设施的未来。",
-        url: "https://medium.com/@KiteAI/building-omnichain-apps-on-kite-agent-native-cross-chain-execution-2d0b1afb73c6",
+        id: "x-cn-0610-1",
+        date: "2026-06-10",
+        textEn: "AI on Air Ep 17 Preview: Sovereign Agent Finance — KRW Stablecoins, Compliance, and Machine Payments. The Korean crypto market isn't advancing uniformly; stratification is underway within institutions.",
+        textZh: "AI on Air 第 17 集预告——主权代理金融：KRW 稳定币、合规与机器支付。怎样的金融 rails？KRW 稳定币、身份与合规应该如何在本地市场运作？机器原生支付基础设施在实践中是什么样？欢迎收看 AI on Air 第 17 期，本期嘉宾是 @hashed_official 的 CEO @harryhojinkim。",
+        url: "https://x.com/KiteAIChinese",
+      },
+      {
+        id: "x-cn-0611-1",
+        date: "2026-06-11",
+        textEn: "Chi Zhang on BlockHash Podcast Ep. 742: Agent economics won't start from shopping, but from APIs. Why Kite's go-to-market judgment completely reversed within a year — from consumer to infrastructure-first.",
+        textZh: "Agent 经济不会从购物开始，而是从 API 开始。Chi 做客 BlockHash 播客第 742 集，分享 Kite 的市场判断在一年内完全逆转的故事：从面向消费者转向基础设施优先。",
+        url: "https://www.youtube.com/watch?v=se1HXCqNC7E",
+        mediaUrl: "https://img.youtube.com/vi/se1HXCqNC7E/maxresdefault.jpg",
+      },
+      {
+        id: "x-cn-0612-1",
+        date: "2026-06-12",
+        textEn: "When payment, identity and platform converge into one room — Agentic Commerce stops being just a concept and becomes an infrastructure challenge. Join Chi at 'The Agentic Economy' in SF.",
+        textZh: "当支付、身份与平台进入同一个房间，Agentic Commerce 就不再只是概念，而是基础设施问题。旧金山，6 月 15 日 17:00-20:00 PDT。我们的联合创始人兼 CEO @ChiZhangData 将参加「The Agentic Economy: Payments, Commerce & AI-Native Platforms」，围绕 Agent 经济展开一场务实讨论。",
+        url: "https://x.com/KiteAIChinese",
+      },
+      {
+        id: "x-cn-0613-1",
+        date: "2026-06-13",
+        textEn: "AI on Air Ep 17 is now live. Full episode with Hashed Open Finance CEO — exploring why Korea could emerge as a hub for AI agents and machine-native payments.",
+        textZh: "AI on Air 第 17 集完整版正式上线，对话 Hashed Open Finance CEO @harryhojinkim，深入探讨韩国加密市场的机构分层趋势，以及为何韩国可能成为 AI agents 与机器原生支付的重要据点。",
+        url: "https://x.com/KiteAIChinese",
+      },
+      {
+        id: "x-cn-0608-1",
+        date: "2026-06-08",
+        textEn: "Excited to announce Kite ecosystem as a launch partner for @billions_ntwk's Collaborative AI Agent Movie! 500+ AI builders are turning Agents into filmmakers via human-proof x402 payment extension — secure micro-payments for autonomously coordinated Agents at scale.",
+        textZh: "我们非常高兴地宣布 Kite 生态成为 @billions_ntwk 协作式 AI Agent 电影发布的启动合作伙伴！500 多位 AI 构建者正将 Agent 转变为电影制作人，借助 human-proof x402 支付扩展。这就是 Agent 经济在行动，专为大规模协调的自主 Agent 打造的 secure 微支付。",
+        url: "https://x.com/KiteAIChinese",
+      },
+    ],
+  },
+  {
+    weekOf: "2026-06-01",
+    weekLabelZh: "2026 年 6 月 1 日 当周",
+    posts: [
+      {
+        id: "x-cn-0603-1",
+        date: "2026-06-03",
+        textEn: "2026 Champions League final goes to penalties, PSG defeats Arsenal. But the real payout is on the draw — imagine if there were an agent that could seize such an opportunity for you, act when a signal appears, but only if this agent can move your assets with your authorization.",
+        textZh: "2026 欧冠决赛进入点球大战，PSG 击败阿森纳。真正的收益在于这次逆转——想象一下，如果有一个代理能够为你抓住这样的机会：当信号出现时立刻行动，但前提是这个代理只能在你的授权范围内动用你的资产。这正是 Kite Passport 解决的核心问题。",
+        url: "https://x.com/KiteAIChinese",
+      },
+      {
+        id: "x-cn-0604-1",
+        date: "2026-06-04",
+        textEn: "Excited to join @Bitget_AI's Hackathon S1 as an official partner and judge! Developers can describe trading ideas in natural language — Bitget AI turns them into live strategies. $50K USDT prize pool. Kite is building the first AI payment blockchain for autonomous agents.",
+        textZh: "很高兴以官方合作伙伴和评委参与 @Bitget_AI 的 Hackathon S1！开发者无需代码基础，只需用自然语言描述你的交易点子，@Bitget_AI 就能帮你生成策略并实现上线。5 万 USDT 奖金池等你来挑战～在 @GoKiteAI，我们专注于构建首个 AI 支付区块链，为自主智能体提供安全、低费用的支付能力。",
+        url: "https://x.com/KiteAIChinese",
+      },
+      {
+        id: "x-cn-0605-1",
+        date: "2026-06-05",
+        textEn: "Known as the 'Davos of Web3' — back to the Louvre. Kite is delighted to be a sponsor and partner of @ProofofTalk 2026, an invite-only leadership summit held at the Louvre Palace in Paris. June 2–3, 2,500 attendees of whom 85% are decision-makers, 120+ speakers representing $18T in managed assets.",
+        textZh: "被称为「Web3 达沃斯」的盛会，重返卢浮宫。Kite 很荣幸成为 @ProofofTalk 2026 的赞助商与合作伙伴。这是一场仅受邀的领导力峰会，举办地点在巴黎卢浮宫。▷ 6 月 2 日至 3 日，就在卢浮宫内。▷ 限额 2,500 位与会者，其中 85% 为决策者。▷ 120+ 位演讲嘉宾，合计代表 $18T 管理资产。",
+        url: "https://x.com/KiteAIChinese",
+      },
+      {
+        id: "x-cn-0607-1",
+        date: "2026-06-07",
+        textEn: "Chi Zhang on @AiCuriousHQ podcast with @jeffwilser: When AI Agents shop for you, your most important customer might not be human at all. How far agentic commerce has come — and why it's arriving faster than most people imagine.",
+        textZh: "当 AI Agent 为你购物，你最重要的客户可能根本不是人类。Chi 做客 @AiCuriousHQ 播客，与 @jeffwilser 探讨 agentic 商业已经走了多远——以及为什么它到来的速度比大多数人想象的还要快。",
+        url: "https://www.youtube.com/watch?v=OMkE-eO4WX8",
+        mediaUrl: "https://img.youtube.com/vi/OMkE-eO4WX8/maxresdefault.jpg",
+      },
+    ],
+  },
+  {
+    weekOf: "2026-05-25",
+    weekLabelZh: "2026 年 5 月 25 日 当周",
+    posts: [
+      {
+        id: "x-cn-0528-1",
+        date: "2026-05-28",
+        textEn: "A data analyst has a 500GB dataset in hand, with a 6-hour deadline — but her laptop simply can't handle the workload. Her agent can complete it for her, but only if this agent can spend money on her behalf, without gaining access to her cloud account credentials, credit card, or more.",
+        textZh: "一位数据分析师手握 500GB 数据集，距离截止时间还有 6 小时，但她的笔记本根本撑不住工作量。她的 Agent 可以替她完成，但前提是：这个 Agent 能够在不获取她云账户凭证、信用卡或其他权限的情况下，代她花钱。这正是 Kite Passport 要解决的问题。",
+        url: "https://x.com/KiteAIChinese",
+      },
+      {
+        id: "x-cn-0529-1",
+        date: "2026-05-29",
+        textEn: "Excited to see our CMO @Cindyshi0907 invited to join the Kite AI Mainnet AMA hosted by @Edward__Park! Tonight 10 PM KST at CoinGachi Investment Twitter — sharing progress and outlook after Mainnet launch.",
+        textZh: "很高兴看到我们的 CMO @Cindyshi0907 受邀参加 @Edward__Park 主持的 Kite AI 主网 AMA！今晚 10 PM KST，她将在 CoinGachi Investment Twitter 与大家见面，分享 Mainnet 上线后的进展与展望。在 @GoKiteAI，我们正在构建能够大规模驱动自主智能体的第一个 AI 支付区块链。",
+        url: "https://x.com/KiteAIChinese",
+      },
+      {
+        id: "x-cn-0531-1",
+        date: "2026-05-31",
+        textEn: "Known as the 'Davos of Web3', back to the Louvre. Kite is delighted to be a sponsor and partner of @ProofofTalk 2026 at the Louvre Palace in Paris — 2,500 attendees, 85% decision-makers, $18T in managed assets represented.",
+        textZh: "被称为「Web3 达沃斯」的盛会，重返卢浮宫。Kite 很荣幸成为 @ProofofTalk 2026 的赞助商与合作伙伴，这是一场在巴黎卢浮宫举办的仅受邀领导力峰会，汇聚 2,500 位与会者（85% 为决策者），120+ 演讲嘉宾合计代表 $18T 管理资产。",
+        url: "https://x.com/KiteAIChinese",
+      },
+    ],
+  },
+  {
+    weekOf: "2026-05-19",
+    weekLabelZh: "2026 年 5 月 19 日 当周",
+    posts: [
+      {
+        id: "x-cn-0521-1",
+        date: "2026-05-21",
+        textEn: "We're delighted that Kite participated in the insightful roundtable hosted by @SEABWofficial, and extend our thanks to @hashed_official for the invitation — joining forces to advance the development of machine-to-machine economies.",
+        textZh: "很高兴 Kite 能够参加由 @SEABWofficial 主办的圆桌讨论，并感谢 @hashed_official 的邀请，携手共同推动机器与机器之间经济的发展。",
+        url: "https://x.com/KiteAIChinese",
+      },
+      {
+        id: "x-cn-0524-1",
+        date: "2026-05-24",
+        textEn: "Kite is continuously advancing the construction of autonomous business infrastructure by strengthening trust, deepening engagement with the global ecosystem, and exploring the future of AI-driven economies. This week's delivery progress: SOC 2 Type II Compliant achieved.",
+        textZh: "Kite 正持续推进自主商业基础设施建设，通过强化信任、深化全球生态参与，以及探索 AI 驱动经济的未来。以下是本周工作进展：① 我们已获得 SOC 2 Type II 合规认证，进一步强化企业级安全标准。",
+        url: "https://x.com/KiteAIChinese",
+      },
+      {
+        id: "x-2026-0520-1",
+        date: "2026-05-20",
+        textEn: "Chi Zhang on Y Talk (Chinese interview): Agentic payments — the next trillion-dollar infrastructure. Why AI agents need native payment capabilities and how Kite is the core builder.",
+        textZh: "Chi 接受 Y Talk 专访（中文）：代理支付——下一个万亿美元基础设施。为什么 AI 代理需要原生支付能力，Kite 如何成为核心构建者。",
+        url: "https://www.youtube.com/watch?v=y1kDxjLH2-g",
+        mediaUrl: "https://img.youtube.com/vi/y1kDxjLH2-g/maxresdefault.jpg",
       },
     ],
   },
@@ -678,6 +884,15 @@ export const weeklyUpdates: WeeklyGroup[] = [
         textEn: "Chi Zhang at Consensus 2026: The Trillion Dollar Question — Framework for Agentic Payments. Kite CEO outlines how agentic payments will reshape the global economy.",
         textZh: "Chi 出席 Consensus 2026：万亿美元之问——代理支付的框架。Kite CEO 阐述代理支付将如何重塑全球经济格局。",
         url: "https://www.youtube.com/watch?v=reU6Byhx5og",
+        mediaUrl: "https://img.youtube.com/vi/reU6Byhx5og/maxresdefault.jpg",
+      },
+      {
+        id: "x-2026-0516-1",
+        date: "2026-05-16",
+        textEn: "🚀 Kite Mainnet is LIVE. The Payments Layer for the Agent Economy is officially here. Chain ID 2366. Built for high-frequency stablecoin payments at scale. Try Kite Agent Passport at agentpassport.ai",
+        textZh: "🚀 Kite 主网正式上线！代理经济的支付层正式诞生。Chain ID 2366，专为代理高频稳定币支付优化。立即体验 Kite Agent Passport：agentpassport.ai",
+        url: "https://medium.com/@KiteAI/introducing-kite-mainnet-2959c89b7403",
+        likes: 2341,
       },
       {
         id: "x-2026-0518-1",
@@ -690,9 +905,30 @@ export const weeklyUpdates: WeeklyGroup[] = [
     ],
   },
   {
+    weekOf: "2026-05-05",
+    weekLabelZh: "2026 年 5 月 5 日 当周",
+    posts: [
+      {
+        id: "x-2026-0509-1",
+        date: "2026-05-09",
+        textEn: "Chi Zhang x Animoca Brands President Alan Lau: Stablecoin payments and identity for AI agents — how Web3 gaming and autonomous agents converge on Kite.",
+        textZh: "Chi × Animoca Brands 总裁 Alan Lau 深度对话：AI 代理的稳定币支付与身份认证，Web3 游戏与 AI 代理如何在 Kite 上融合。",
+        url: "https://www.youtube.com/watch?v=KIKpZ8qopdY",
+        mediaUrl: "https://img.youtube.com/vi/KIKpZ8qopdY/maxresdefault.jpg",
+      },
+    ],
+  },
+  {
     weekOf: "2026-04-27",
     weekLabelZh: "2026 年 4 月 27 日 当周",
     posts: [
+      {
+        id: "x-2026-0428-chinese-1",
+        date: "2026-04-28",
+        textEn: "Kite AI CEO Chi Zhang participated in the USC VanEck Southern California Blockchain Conference panel on 'AI Applications in Blockchain and Cryptocurrency,' alongside leaders from Solana, Avalanche Labs, and LifeNetwork.AI.",
+        textZh: "非常高兴我们的联合创始人兼 CEO @ChiZhangData 参加了 USC VanEck 南加州区块链大会的「AI 在区块链和加密货币中的应用」圆桌讨论！与 @solana、@AvaLabs、@LifeNetwork_AI 等项目的领导者们一起，就 AI Agent 的发展前景展开了深度探讨。",
+        url: "https://x.com/KiteAIChinese/status/2047858129975799980",
+      },
       {
         id: "x-2026-0430-1",
         date: "2026-04-30",
@@ -712,15 +948,84 @@ export const weeklyUpdates: WeeklyGroup[] = [
     ],
   },
   {
+    weekOf: "2026-04-06",
+    weekLabelZh: "2026 年 4 月 6 日 当周",
+    posts: [
+      {
+        id: "x-2026-0407-1",
+        date: "2026-04-07",
+        textEn: "AI on Air Ep 15 is live: The Trust Layer for Autonomous Commerce — When AI Agents Get a Wallet. Chi hosts Google Cloud Web3 lead Nalin Mittal on how agents transact safely without human intervention.",
+        textZh: "AI on Air 第 15 集上线：自主商务的信任层——当 AI 代理拥有钱包。Chi 对话谷歌云 Web3 产品负责人 Nalin Mittal，探索代理如何在无需人工干预的情况下安全完成交易。",
+        url: "https://www.youtube.com/watch?v=yOcPja2E5SU",
+        mediaUrl: "https://img.youtube.com/vi/yOcPja2E5SU/maxresdefault.jpg",
+      },
+    ],
+  },
+  {
+    weekOf: "2026-03-23",
+    weekLabelZh: "2026 年 3 月 23 日 当周",
+    posts: [
+      {
+        id: "x-2026-0329-chinese-1",
+        date: "2026-03-29",
+        textEn: "OpenClaw Shanghai Developer Meetup successfully held at Shanghai Westshore Smart Tower on March 29. Highlights: Tencent Cloud QClaw presentation, an agent vulnerability detection demo that auto-scans GitHub PRs and generates vulnerability reports, plus developer discussions on leading the AI agent revolution.",
+        textZh: "3月29日，OpenClaw 上海开发者交流会在上海西岸智塔成功举办！在 AI 智能体已经开始协作写代码、做测试、改 bug 到部署上线的当下，这场线下 meetup 聚焦开发者如何真正参与并引领这场变革。活动亮点：腾讯云 QClaw 主题分享、智能体漏洞检测 demo（自动扫描 GitHub PR 并生成漏洞报告）。",
+        url: "https://x.com/KiteAIChinese/status/2038873882413973840",
+      },
+    ],
+  },
+  {
+    weekOf: "2026-03-09",
+    weekLabelZh: "2026 年 3 月 9 日 当周",
+    posts: [
+      {
+        id: "x-2026-0315-1",
+        date: "2026-03-15",
+        textEn: "AI on Air Ep 14 is live: The Trust Infrastructure for the Agentic Economy. Chi and Crystal Intelligence CEO Navin Gupta discuss reputation systems, compliance, and autonomous finance.",
+        textZh: "AI on Air 第 14 集上线：代理经济的信任基础设施。Chi 与 Crystal Intelligence CEO Navin Gupta 探讨声誉系统、合规机制与自主金融的重要性。",
+        url: "https://www.youtube.com/watch?v=jS9Of4gn6p4",
+        mediaUrl: "https://img.youtube.com/vi/jS9Of4gn6p4/maxresdefault.jpg",
+      },
+    ],
+  },
+  {
+    weekOf: "2026-01-26",
+    weekLabelZh: "2026 年 1 月 26 日 当周",
+    posts: [
+      {
+        id: "x-2026-0127-chinese-1",
+        date: "2026-01-27",
+        textEn: "Kite Mainnet Roadmap: Building an Agent-Native Trust and Payment Tech Stack. Six pillars: Agent Trust (verifiable identity + programmable governance), Agent Settlement (stablecoin with near-zero fees), Agent Developer Infrastructure (zero-fee RPC, docs), Agent Network Operations, AgenticFi, and Agent Ecosystem Growth Engine.",
+        textZh: "Kite 主网路线图：构建智能体原生的信任与支付技术栈。六大支柱：①智能体信任——可验证身份+可编程治理；②智能体结算——稳定币近零手续费；③智能体开发者基础设施——零费用 RPC、完整文档；④智能体网络运营；⑤AgenticFi；⑥智能体生态增长引擎。",
+        url: "https://x.com/KiteAIChinese/status/2016159560671887696",
+      },
+    ],
+  },
+  {
     weekOf: "2026-02-16",
     weekLabelZh: "2026 年 2 月 16 日 当周",
     posts: [
+      {
+        id: "x-2026-0211-chinese-1",
+        date: "2026-02-11",
+        textEn: "'Proof of AI · Builder & Influencer Night' sent a clear signal: the intelligent new era is accelerating. In Hong Kong, we gathered with top Builders, VCs, and forward thinkers to explore the Agentic Internet and Open AI Economy, and how AI can become next-generation infrastructure.",
+        textZh: "Proof of AI · Builder & Influencer Night 释放出一个清晰信号：智能新时代正在加速到来。在香港，我们与顶级 Builder、VC 及前沿思考者共同探讨 Agentic Internet 与 Open AI Economy，思考 AI 如何成为下一代基础设施。",
+        url: "https://x.com/KiteAIChinese/status/2021584290577014902",
+      },
       {
         id: "x-2026-0218-1",
         date: "2026-02-18",
         textEn: "Chi Zhang at Consensus Hong Kong 2026: 'The Agentic Economy — The Endgame and How We Get There.' Agents need identity, payments, and governance to operate at scale.",
         textZh: "Chi 出席 Consensus 香港 2026：代理经济的终局与路径。代理需要身份、支付与治理机制才能规模化运营。",
         url: "https://x.com/GoKiteAI",
+      },
+      {
+        id: "x-2026-0220-1",
+        date: "2026-02-20",
+        textEn: "AI on Air Ep 13 is live: Agentic Finance — When AI Hallucinations Cost Millions. Chi and Surf AI's Ryan Li discuss risk boundaries and structured verification in autonomous finance.",
+        textZh: "AI on Air 第 13 集上线：代理金融——当 AI 幻觉造成数百万损失。Chi 与 Surf AI 联合创始人 Ryan Li 探讨代理金融的风险边界与结构化验证机制。",
+        url: "https://www.youtube.com/watch?v=ozq2mhy9mE0",
+        mediaUrl: "https://img.youtube.com/vi/ozq2mhy9mE0/maxresdefault.jpg",
       },
     ],
   },
@@ -734,6 +1039,7 @@ export const weeklyUpdates: WeeklyGroup[] = [
         textEn: "Chi Zhang at Korea Blockchain Week 2025: Full interview with FIREANT — discussing the trillion-dollar opportunity in agentic payments and Kite's technical roadmap.",
         textZh: "Chi 出席韩国区块链周 2025，接受 FIREANT 深度专访：探讨代理支付的万亿美元机遇与 Kite 的技术路线图。",
         url: "https://www.youtube.com/watch?v=7GoCutDVt6Y",
+        mediaUrl: "https://img.youtube.com/vi/7GoCutDVt6Y/maxresdefault.jpg",
       },
       {
         id: "x-2025-1126-2",
@@ -847,19 +1153,19 @@ export const getCachedPodcasts = unstable_cache(
 
 export const getCachedPersonalUpdates = unstable_cache(
   async () => personalUpdates,
-  ["family-personal"],
+  ["family-personal-v2"],
   { revalidate: 604800, tags: ["family-content"] }
 );
 
 export const getCachedWeeklyUpdates = unstable_cache(
   async () => weeklyUpdates,
-  ["family-weekly-v2"],
+  ["family-weekly-v7"],
   { revalidate: 604800, tags: ["family-content"] }
 );
 
 export const getCachedChiNewsArticles = unstable_cache(
   async () => chiNewsArticles,
-  ["family-chi-news-static"],
+  ["family-chi-news-static-v3"],
   { revalidate: 604800, tags: ["family-content"] }
 );
 

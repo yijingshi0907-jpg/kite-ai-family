@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { createSigningRequest, type Signer } from "@/lib/dropboxsign";
+import { createEmbeddedDraft, type Signer } from "@/lib/dropboxsign";
 import { getGoogleClient } from "@/lib/google";
 import { google } from "googleapis";
+import { downloadSlackFile } from "@/lib/slack-scanner";
 
 export async function POST(req: NextRequest) {
   const session = await auth();
@@ -12,13 +13,14 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { detectedDocId, signers } = body as {
+  const { detectedDocId, signers, folder } = body as {
     detectedDocId: string;
-    signers: Signer[];
+    signers?: Signer[];
+    folder?: string;
   };
 
-  if (!detectedDocId || !signers?.length) {
-    return NextResponse.json({ error: "detectedDocId and signers are required" }, { status: 400 });
+  if (!detectedDocId) {
+    return NextResponse.json({ error: "detectedDocId is required" }, { status: 400 });
   }
 
   // Load detected document
@@ -26,6 +28,10 @@ export async function POST(req: NextRequest) {
   if (!doc || doc.userId !== session.user.id) {
     return NextResponse.json({ error: "Document not found" }, { status: 404 });
   }
+
+  // Load user settings for enterprise options
+  const userSettings = await db.userSettings.findUnique({ where: { userId: session.user.id } });
+  const resolvedFolder = folder || userSettings?.dropboxSignFolder || undefined;
 
   // Download the document bytes
   let fileBuffer: Buffer;
@@ -35,24 +41,30 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: `Failed to download document: ${e.message}` }, { status: 500 });
   }
 
-  // Send to Dropbox Sign
-  let signingResult;
+  // Create embedded draft in Dropbox Sign
+  let draftResult;
   try {
-    signingResult = await createSigningRequest(doc.fileName, fileBuffer, signers, doc.subject ?? undefined);
+    draftResult = await createEmbeddedDraft(doc.fileName, fileBuffer, signers ?? [], doc.subject ?? undefined, {
+      folder: resolvedFolder,
+      requesterEmail: userSettings?.dropboxSignRequesterEmail ?? undefined,
+      ccEmails: userSettings?.dropboxSignCcEmail ? [userSettings.dropboxSignCcEmail] : undefined,
+    });
   } catch (e: any) {
-    return NextResponse.json({ error: `Dropbox Sign error: ${e.message}` }, { status: 500 });
+    const detail = e?.body?.error?.errorMsg ?? e?.body?.error ?? e?.message ?? String(e);
+    console.error("Dropbox Sign error:", JSON.stringify(e?.body ?? e?.message));
+    return NextResponse.json({ error: `Dropbox Sign error: ${detail}` }, { status: 500 });
   }
 
-  // Save SigningRequest to DB
+  // Save SigningRequest to DB as PENDING_REVIEW until user sends from Dropbox Sign
   const signingRequest = await db.signingRequest.create({
     data: {
       userId: session.user.id,
       detectedDocId: doc.id,
       documentName: doc.fileName,
-      dropboxSignId: signingResult.signatureRequestId,
-      signingUrl: signingResult.signingUrl,
-      status: "SENT",
-      signers: signers as unknown as import("@prisma/client").Prisma.InputJsonValue,
+      dropboxSignId: draftResult.signatureRequestId,
+      signingUrl: draftResult.claimUrl,
+      status: "PENDING_REVIEW",
+      signers: (signers ?? []) as unknown as import("@prisma/client").Prisma.InputJsonValue,
     },
   });
 
@@ -60,7 +72,7 @@ export async function POST(req: NextRequest) {
   await db.signingEvent.create({
     data: {
       signingRequestId: signingRequest.id,
-      eventType: "sent",
+      eventType: "draft_created",
     },
   });
 
@@ -73,7 +85,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({
     success: true,
     signingRequestId: signingRequest.id,
-    signingUrl: signingResult.signingUrl,
+    claimUrl: draftResult.claimUrl,
   });
 }
 
@@ -131,6 +143,10 @@ async function downloadDocument(
       );
       return Buffer.from(res.data as ArrayBuffer);
     }
+  }
+
+  if (doc.source === "SLACK") {
+    return downloadSlackFile(doc.sourceId);
   }
 
   throw new Error(`Unsupported document source: ${doc.source}`);
