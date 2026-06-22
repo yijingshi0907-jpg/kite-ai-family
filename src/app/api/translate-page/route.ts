@@ -113,9 +113,8 @@ function renderPage(title: string, translatedTitle: string, url: string, bodyHtm
 <body>
   <div class="badge">机器翻译 · 百度</div>${isPartial ? '<span class="warn">内容可能不完整</span>' : ""}
   <h1>${translatedTitle || title}</h1>
-  <p class="source">原文：<a href="${url}" target="_blank" rel="noopener">${url}</a></p>
   ${bodyHtml}
-  <div class="footer">本页面由百度翻译 API 自动翻译，内容仅供参考，请以原文为准。</div>
+  <div class="footer">本页面由百度翻译 API 自动翻译，内容仅供参考。<br/><a href="${url}" target="_blank" rel="noopener">查看英文原文 →</a></div>
 </body>
 </html>`;
 }
