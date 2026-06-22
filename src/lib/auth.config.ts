@@ -25,7 +25,8 @@ export const authConfig: NextAuthConfig = {
         pathname.startsWith("/api/webhooks") ||
         pathname.startsWith("/family") ||
         pathname.startsWith("/api/image-proxy") ||
-        pathname.startsWith("/api/translate-page");
+        pathname.startsWith("/api/translate-page") ||
+        pathname.startsWith("/api/family-auth");
 
       if (isPublic) return true;
       return isLoggedIn;

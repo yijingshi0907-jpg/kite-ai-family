@@ -1,12 +1,20 @@
 import type { ReactNode } from "react";
+import { cookies } from "next/headers";
 import FamilyNav from "./FamilyNav";
+import PasscodeGate from "./PasscodeGate";
 
 export const metadata = {
   title: "Chi 家庭动态站",
   description: "Chi 的个人与公司最新资讯，专为家人打造",
 };
 
-export default function FamilyLayout({ children }: { children: ReactNode }) {
+export default async function FamilyLayout({ children }: { children: ReactNode }) {
+  const passcode = process.env.FAMILY_PASSCODE ?? "20260606";
+  const cookieStore = await cookies();
+  const authorized = cookieStore.get("family_auth")?.value === passcode;
+
+  if (!authorized) return <PasscodeGate />;
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top header */}
