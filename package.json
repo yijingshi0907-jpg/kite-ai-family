@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed:family": "ts-node --project tsconfig.json -e \"require('dotenv/config')\" prisma/seed-family.ts"
+  },
+  "prisma": {
+    "seed": "ts-node --project tsconfig.json prisma/seed-family.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",

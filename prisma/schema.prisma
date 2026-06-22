@@ -145,3 +145,64 @@ model SigningEvent {
 
   signingRequest SigningRequest @relation(fields: [signingRequestId], references: [id], onDelete: Cascade)
 }
+
+// ── Family site content ──────────────────────────────────────────────────────
+
+model FamilyWeeklyPost {
+  id          String   @id @default(cuid())
+  weekOf      String   // e.g. "2026-06-15"
+  weekLabel   String   // e.g. "2026 年 6 月 15 日 当周"
+  date        String   // e.g. "2026-06-18"
+  textZh      String
+  url         String
+  mediaUrl    String?  // original URL (YouTube thumbnail or tweet image)
+  likes       Int?
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+model FamilyInterview {
+  id        String   @id @default(cuid())
+  date      String
+  titleZh   String
+  bodyZh    String
+  type      String   @default("interview") // "interview" | "podcast"
+  youtubeId String?
+  imageUrl  String?
+  sourceUrl String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model FamilyNewsArticle {
+  id          String   @id @default(cuid())
+  date        String
+  titleZh     String?
+  titleEn     String
+  descZh      String?
+  publisher   String
+  url         String
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+model FamilyPodcast {
+  id         String   @id @default(cuid())
+  episode    Int
+  titleZh    String
+  guestZh    String
+  guestOrgZh String
+  youtubeUrl String
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+}
+
+model FamilyRefLink {
+  id       String   @id @default(cuid())
+  icon     String
+  titleZh  String
+  descZh   String
+  url      String
+  sortOrder Int     @default(0)
+  createdAt DateTime @default(now())
+}
