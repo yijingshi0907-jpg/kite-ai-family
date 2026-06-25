@@ -145,6 +145,44 @@ Confirm output shows the expected counts (weekly posts, interviews, news, podcas
 
 ---
 
+## Step 4.5 — Self-host new videos (interviews / podcasts)
+
+Videos play **in-page** from Cloudflare R2 (no VPN needed in China). The player
+derives each URL automatically from `VIDEO_BASE_URL` + the YouTube ID, so the ONLY
+requirement is: **every video's `<youtube-id>.mp4` must exist in the R2 bucket.**
+No DB field, no per-video config — just add the interview/podcast to the seed
+(Step 2) with its `youtubeId`, then upload the file here.
+
+**Flow for new videos:**
+
+1. **Find new videos** on the Kite YouTube channel: https://www.youtube.com/@kiteai_official/videos
+   Collect each new video's **ID** (the `v=XXXX` part of the URL).
+
+2. **Download** them by ID (the script names them `<id>.mp4` automatically):
+   ```bash
+   bash scripts/download-family-videos.sh ID1 ID2 ID3   # pass only the NEW ids
+   ```
+   > Uses `yt-dlp` (reliable, scriptable). The greenvideo.cc website also works but
+   > is manual (captchas, 1 file at a time) — `yt-dlp` is the automated path.
+
+3. **Upload** to R2 (skips files already there, resumes on network drops):
+   ```bash
+   bash scripts/upload-family-videos.sh
+   ```
+   One-time setup for `rclone` is documented at the top of that script.
+
+4. **Confirm** all expected files are in the bucket — the upload script prints the
+   list, or run `rclone ls r2:cz-family-videos`.
+
+That's it. Because `VIDEO_BASE_URL` is already set on Zeabur, once a `<id>.mp4` is in
+the bucket AND the matching interview/podcast row is seeded, the in-page player
+appears. Missing file → that card falls back to the YouTube link automatically.
+
+> `VIDEO_BASE_URL` = `https://pub-b604ad8e33a347029effe5e91124b38d.r2.dev` (R2 public).
+> If China playback is slow, put the bucket behind a custom domain and update this var.
+
+---
+
 ## Step 5 — Commit and deploy
 
 Zeabur auto-deploys on every push to `main` (no CLI deploy needed):
