@@ -47,3 +47,6 @@ next-env.d.ts
 .kite-passport/
 .env.save
 .env.neon
+
+# Downloaded family videos (upload to R2, not git)
+family-videos/
