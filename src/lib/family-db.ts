@@ -10,6 +10,14 @@ function ytProxy(youtubeId: string): string {
   return proxyImg(`https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`)!;
 }
 
+// Self-hosted video URL on R2 (files named <youtube-id>.mp4). Falls back to
+// undefined when VIDEO_BASE_URL is unset → UI keeps the original YouTube link.
+function selfHostedVideo(youtubeId: string | null | undefined): string | undefined {
+  const base = process.env.VIDEO_BASE_URL;
+  if (!base || !youtubeId) return undefined;
+  return `${base.replace(/\/$/, "")}/${youtubeId}.mp4`;
+}
+
 // ── Weekly posts ─────────────────────────────────────────────────────────────
 
 export interface XPost {
@@ -59,6 +67,7 @@ export interface PersonalUpdate {
   youtubeId?: string;
   imageUrl?: string;
   sourceUrl?: string;
+  videoUrl?: string;
 }
 
 export async function getInterviews(): Promise<PersonalUpdate[]> {
@@ -72,6 +81,7 @@ export async function getInterviews(): Promise<PersonalUpdate[]> {
     youtubeId: r.youtubeId ?? undefined,
     imageUrl: r.youtubeId ? ytProxy(r.youtubeId) : (r.imageUrl ? proxyImg(r.imageUrl) : undefined),
     sourceUrl: r.sourceUrl ?? undefined,
+    videoUrl: selfHostedVideo(r.youtubeId),
   }));
 }
 
@@ -110,6 +120,7 @@ export interface PodcastEpisode {
   guestOrgZh: string;
   youtubeUrl: string;
   thumbnailUrl: string;
+  videoUrl?: string;
 }
 
 export async function getPodcasts(): Promise<PodcastEpisode[]> {
@@ -124,6 +135,7 @@ export async function getPodcasts(): Promise<PodcastEpisode[]> {
       guestOrgZh: r.guestOrgZh,
       youtubeUrl: r.youtubeUrl,
       thumbnailUrl: ytProxy(ytId),
+      videoUrl: selfHostedVideo(ytId),
     };
   });
 }

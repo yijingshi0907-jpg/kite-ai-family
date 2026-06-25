@@ -8,6 +8,35 @@ function formatDateZh(dateStr: string) {
 
 function InterviewCard({ post }: { post: PersonalUpdate }) {
   const href = post.sourceUrl ?? "#";
+
+  // Self-hosted video → play inline (no VPN needed in China)
+  if (post.videoUrl) {
+    return (
+      <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
+        <div className="relative w-full aspect-video bg-black">
+          <video
+            controls
+            preload="none"
+            poster={post.imageUrl}
+            className="w-full h-full object-contain bg-black"
+          >
+            <source src={post.videoUrl} type="video/mp4" />
+          </video>
+          {post.type === "interview" && (
+            <span className="absolute top-3 left-3 bg-black/70 text-white text-xs font-semibold px-2 py-1 rounded-md backdrop-blur-sm pointer-events-none">
+              专访
+            </span>
+          )}
+        </div>
+        <div className="p-4 flex flex-col flex-1">
+          <p className="text-xs text-rose-400 font-medium mb-1.5">{formatDateZh(post.date)}</p>
+          <h2 className="text-sm font-bold text-gray-900 leading-snug flex-1">{post.titleZh}</h2>
+          <p className="text-xs text-gray-500 leading-relaxed mt-2 line-clamp-3">{post.bodyZh}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <a href={href} target="_blank" rel="noopener noreferrer"
       className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col group">
@@ -74,6 +103,32 @@ function NewsCard({ article }: { article: PersonalNewsArticle }) {
 }
 
 function PodcastCard({ ep }: { ep: PodcastEpisode }) {
+  // Self-hosted video → play inline (no VPN needed in China)
+  if (ep.videoUrl) {
+    return (
+      <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
+        <div className="relative w-full aspect-video bg-black">
+          <video
+            controls
+            preload="none"
+            poster={ep.thumbnailUrl}
+            className="w-full h-full object-contain bg-black"
+          >
+            <source src={ep.videoUrl} type="video/mp4" />
+          </video>
+          <span className="absolute top-2 left-2 bg-rose-500 text-white text-xs font-bold px-2 py-0.5 rounded-full pointer-events-none">
+            第 {ep.episode} 集
+          </span>
+        </div>
+        <div className="p-4 flex flex-col flex-1">
+          <h3 className="text-sm font-bold text-gray-900 leading-snug mb-1 line-clamp-2">{ep.titleZh}</h3>
+          <p className="text-xs text-gray-500">嘉宾：{ep.guestZh}</p>
+          <p className="text-xs text-gray-400 mt-0.5">{ep.guestOrgZh}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <a key={ep.id} href={ep.youtubeUrl} target="_blank" rel="noopener noreferrer"
       className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col group">
