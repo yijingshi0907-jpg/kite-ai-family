@@ -75,21 +75,29 @@ open and logged into X** — the browser extension only works on the live sessio
 |--------|----------------|---------|
 | [@KiteAIChinese](https://x.com/KiteAIChinese) | **Browser extension** (X blocks plain fetch → 402) | Weekly news → `/family/weekly` |
 | [gokite.ai/media](https://gokite.ai/media) | **WebFetch** (public, fetchable) | Company news → `/family/company` |
-| Chi YouTube videos | **Discovered via the X feed + media page** (youtube.com is BLOCKED to the extension); download by ID with `yt-dlp` | Videos → `/family/personal` (self-hosted) |
+| [Kite YouTube channel](https://www.youtube.com/@kiteai_official/videos) | **`yt-dlp` CLI** (enumerate + download) | Videos → `/family/personal` (self-hosted) |
 
-> Video discovery does NOT come from browsing the YouTube channel directly — that URL
-> is blocked to the extension. Instead, harvest the `youtube.com/watch?v=…` links that
-> @KiteAIChinese and gokite.ai/media post, then resolve/download those IDs.
+> The Claude-in-Chrome **extension is blocked from navigating to youtube.com**, but the
+> **`yt-dlp` command line is NOT** — use it to enumerate the channel directly:
+> `yt-dlp --flat-playlist --playlist-end 15 --print "%(id)s | %(title)s" "https://www.youtube.com/@kiteai_official/videos"`
+> Then keep only **Chi-related** videos (interviews, panels, AI on Air episodes — NOT
+> product/use-case demos), and get each candidate's date/title with
+> `yt-dlp --skip-download --print "%(upload_date)s | %(title)s | %(channel)s" <url>`.
 
 ### Weekly flow
 1. **Determine the window** — the 7 days since last Sunday (e.g. "after 6/22").
-2. **Gather** (browser extension for X; WebFetch for media): scroll @KiteAIChinese
-   back to the window boundary, collecting post text + dates + any YouTube links; fetch
-   gokite.ai/media for new company articles.
-3. **Resolve video IDs** — X truncates links behind `t.co`; run
-   `curl -sI <t.co-url>` to get the real `youtube.com/watch?v=<ID>`, or read the DOM
-   with the extension's `javascript_tool` (scan `a[href]` for youtube links).
-   Confirm titles/dates with `yt-dlp --skip-download --print "%(upload_date)s | %(title)s"`.
+2. **Gather** from all three sources:
+   - **X** (browser extension): scroll @KiteAIChinese back to the window boundary,
+     collecting post text + dates. (Also fine as a cross-check for video links, but the
+     channel enum below is the primary video source.)
+   - **Media** (WebFetch): fetch gokite.ai/media for new company articles.
+   - **YouTube** (`yt-dlp` CLI): `yt-dlp --flat-playlist --playlist-end 15 --print
+     "%(id)s | %(title)s" "https://www.youtube.com/@kiteai_official/videos"` — enumerate
+     recent uploads, keep the **Chi-related** ones (interviews/panels/AI on Air, not demos).
+3. **Confirm video dates/titles** — for each candidate ID:
+   `yt-dlp --skip-download --print "%(upload_date)s | %(title)s | %(channel)s" <url>`.
+   (If a video only appears as a `t.co` link on X, `curl -sI <t.co-url>` resolves the real
+   `youtube.com/watch?v=<ID>`.)
 4. **Dedupe** against what's already seeded (existing weekly posts, interview
    `youtubeId`s, podcast episodes, news URLs). Skip anything already present.
 5. **DRAFT + APPROVE** — present a summary of exactly what will be added
