@@ -18,6 +18,26 @@ async function main() {
 
   const weeklyGroups = [
     {
+      weekOf: "2026-06-29", weekLabel: "2026 年 6 月 29 日 当周",
+      posts: [
+        { date: "2026-06-30", summaryZh: "Kite 与 OKX OnchainOS 达成合作，为运行在其上的自主 Agent 带来可验证身份与可编程花费控制——让「谁授权、限额多少」成为每笔交易的前提。", textZh: "一个能交易的 Agent，必须先回答一个问题：是谁授权了它，花费上限是多少？Kite 正与 @okx 合作，为运行在 OKX OnchainOS 上的自主 Agent 带来可验证身份与可编程花费控制。", url: "https://x.com/KiteAIChinese", mediaUrl: null },
+        { date: "2026-07-01", summaryZh: "Kite 联合创始人兼 CEO Chi Zhang 将出席旧金山 AGI Summit SF 2026（7 月 18-19 日），与业界领袖同台探讨 Agent 经济的身份、支付与规模化。", textZh: "AI 的下一阶段由「执行」定义：Agent 将代表用户行动、交易、完成真实任务。而在这一转变规模化之前，每个 Agent 都必须获得可验证的授权、受可执行的消费限额约束，并始终处于人的控制之下。我们很高兴地宣布：Kite 联合创始人兼 CEO @ChiZhangData 将出席 AGI Summit SF 2026（7 月 18-19 日，旧金山）。", url: "https://x.com/KiteAIChinese", mediaUrl: null },
+        { date: "2026-07-01", summaryZh: "Chi 做客 Vishwa Hubble Space「Agent Passports：身份遇见控制」，与 VishwaLab 联合创始人及 Kite CTO 同台，解析 Agent 护照如何在授权与控制之间取得平衡。", textZh: "Chi 参与 Vishwa Hubble Space 直播「Agent Passports: Identity Meets Control」，与 @VishwaLab 联合创始人 Nathan Liang、Kite 联合创始人兼 CTO Scott 同台，深入探讨 Agent 身份认证与花费控制的设计。", url: "https://x.com/KiteAIChinese", mediaUrl: null },
+        { date: "2026-07-02", summaryZh: "Kite 成为 Imperial Blockchain & Fintech 主办的 UK AI Agent Hackathon EP5 社区合作伙伴，为探索 Agent 未来形态的开发者提供底层基础设施支持。", textZh: "每一个真正有用的 Agent，都始于一次实验：一个能行动、能交易、并始终运行在拥有者设定边界内的东西。正因如此，我们很高兴成为 @iclblockchain UK AI Agent Hackathon EP5 的社区合作伙伴。对每一位在探索 Agent 未来形态的 builder，我们正在打造支撑一切的基础设施。", url: "https://x.com/KiteAIChinese", mediaUrl: null },
+        { date: "2026-07-03", summaryZh: "本周 Kite Passport release 以 spending sessions 为中心重构了 dashboard，并为 Agent 新增云部署技能：实时查看会话与交易、浏览器内一键创建 session、通过 kpass cloud 一条命令将项目端到端部署到 Google Cloud。", textZh: "你的 Agent 会花钱了，现在每一分都看得见，而且是实时的。本周 Kite Passport 的 release 围绕 spending sessions 重建了 dashboard，还为 Agent 新增了云部署技能：① 以 session 为中心的 dashboard，一屏实时可见活跃会话、交易历史与单个 session 的活动明细；② 浏览器里一键创建并附加 spending session，还内置沙盒测试环境；③ kpass cloud 让 Agent 把本地项目端到端配置并部署到 Google Cloud，一条命令链走完。", url: "https://x.com/KiteAIChinese", mediaUrl: null },
+        { date: "2026-07-03", summaryZh: "Kite 推出双周「AI Agent Pulse」行业观察，为读者梳理 agentic AI 领域最新的产品、协议与生态动态。", textZh: "AI Agent Pulse——Kite 的双周 agentic AI 行业观察正式上线，为你梳理代理式 AI 领域最新的产品、协议与生态趋势。", url: "https://x.com/KiteAIChinese", mediaUrl: null },
+        { date: "2026-07-03", summaryZh: "Kite 成为 Unibase Memory Chrome 扩展的启动合作伙伴，并同步推出 GoKiteAI Memory Card——在 AI 围绕 Kite 做研究、开发或创作前，为其提供所需的正确上下文。", textZh: "Kite 正式成为 Unibase Memory Chrome 扩展的启动合作伙伴，并同步推出 @GoKiteAI Memory Card：在 AI 围绕 Kite 进行研究、开发或创作之前，提供其所需的正确上下文。", url: "https://x.com/KiteAIChinese", mediaUrl: null },
+      ],
+    },
+    {
+      weekOf: "2026-06-22", weekLabel: "2026 年 6 月 22 日 当周",
+      posts: [
+        { date: "2026-06-23", summaryZh: "在巴黎卢浮宫举办的 ProofOfTalk 峰会上，Chi 登台参与「到底是什么定义了一个 Agent」主题讨论，与 Billions Network、Parity、Suremark 等多位领袖同台。", textZh: "到底是什么定义了一个 agent？越往深处想，这条界线越模糊。在法国巴黎卢浮宫举办的 @proofoftalk 峰会上，我们的联合创始人兼 CEO @ChiZhangData 登台，与来自 @billions_ntwk、@paritytech、@SuremarkDigital 的多位领袖同台讨论。", url: "https://x.com/KiteAIChinese", mediaUrl: null },
+        { date: "2026-06-26", summaryZh: "PayPal 稳定币 PYUSD 经 LayerZero 跨链、Stargate 桥接后在 Kite 上线，为 Kite 上的 Agent 提供受监管、以美元背书的结算资产。", textZh: "PYUSD 现已在 Kite 上线。PayPal USD 经 @LayerZero_Core 跨链、并通过 @StargateFinance 桥接，现已可供 Kite 上的 Agent 使用。它是一种受监管、以美元背书的稳定币，在 Agent 真正发生交易的地方完成结算。稳定币是 Agent 经济的结算层，而它们只有在不被锁死于单一链时，才能发挥最大价值。", url: "https://x.com/KiteAIChinese", mediaUrl: null },
+        { date: "2026-06-28", summaryZh: "AI on Air 第 17 集完整上线，Chi 对话 Hashed Open Finance CEO Harry Ho Jin Kim，拆解「Agent 为何至今无法完成交易」这一核心症结，并探讨韩国成为机器原生支付重要据点的可能。", textZh: "凌晨四点，你的 agent 找到一张 250 美元的东京机票，却付不了款——这道缺口，正是 agent 支付的症结所在。在 AI on Air 第 17 期里，@harryhojinkim（@hashed_official Open Finance CEO）与我们的联合创始人兼 CEO @ChiZhangData 同台，拆解了一个核心问题：agent 为什么至今还无法完成交易。", url: "https://www.youtube.com/watch?v=PLU5Jumn1kc", mediaUrl: "https://img.youtube.com/vi/PLU5Jumn1kc/maxresdefault.jpg" },
+      ],
+    },
+    {
       weekOf: "2026-06-15", weekLabel: "2026 年 6 月 15 日 当周",
       posts: [
         { date: "2026-06-15", summaryZh: "本周 Kite 持续推进主权金融对话与生态合作，AI on Air 第 17 集上线，探讨韩国成为 AI 代理与机器支付重要据点的可能性。", textZh: "Kite 正在通过关于主权金融的全球对话、务实的生态合作伙伴关系以及社区驱动的建设，推动 agentic 商业的发展。以下是本周工作进展：① AI on Air 第 17 集正式上线，对话 @hashed_official Open Finance CEO @harryhojinkim，共同探讨韩国为何可能成为 AI agents、韩元 stablecoin 及机器原生支付的重要据点。", url: "https://x.com/KiteAIChinese", mediaUrl: null },
@@ -169,6 +189,7 @@ async function main() {
   console.log(`✓ Seeded ${postOrder} weekly posts`);
 
   const interviews = [
+    { date: "2026-06-28", titleZh: "AI on Air 第 17 集 | 主权代理金融：韩元稳定币、合规与机器支付", bodyZh: "Chi 对话 Hashed Open Finance CEO Harry Ho Jin Kim（@harryhojinkim），探讨韩国为何可能成为 AI 代理、韩元稳定币与机器原生支付的重要据点，并拆解「Agent 至今为何难以完成交易」这一核心症结。", youtubeId: "PLU5Jumn1kc", sourceUrl: "https://www.youtube.com/watch?v=PLU5Jumn1kc" },
     { date: "2026-06-11", titleZh: "Kite CEO Chi Zhang：代理互联网的底层基础 | BlockHash 播客第 742 集", bodyZh: "Chi 做客 BlockHash 播客，分享 Kite 的创业历程：为什么稳定币是 AI 代理的理想可编程货币、信用卡欺诈检测如何阻碍代理交易，以及 Kite Passport 如何通过身份与治理解决这一问题。", youtubeId: "se1HXCqNC7E", sourceUrl: "https://www.youtube.com/watch?v=se1HXCqNC7E" },
     { date: "2026-06-06", titleZh: "如何让 AI 代理帮你花钱？Chi Zhang 解密代理支付 | AI-Curious 播客", bodyZh: "Chi 接受 AI-Curious 播客专访，深入浅出地解释 AI 代理如何在用户授权范围内安全、可信地完成支付，以及 Kite 如何打造这套代理支付基础设施。", youtubeId: "OMkE-eO4WX8", sourceUrl: "https://www.youtube.com/watch?v=OMkE-eO4WX8" },
     { date: "2026-05-20", titleZh: "【中文专访】代理支付：下一个万亿美元基础设施 | Chi Zhang x Y Talk", bodyZh: "Chi 接受 Y Talk 专访，深度解析代理支付赛道的万亿美元机遇——为什么 AI 代理需要原生支付能力，Kite 如何成为这一基础设施的核心构建者。", youtubeId: "y1kDxjLH2-g", sourceUrl: "https://www.youtube.com/watch?v=y1kDxjLH2-g" },
@@ -207,6 +228,7 @@ async function main() {
   console.log(`✓ Seeded ${news.length} news articles`);
 
   const podcasts = [
+    { episode: 17, titleZh: "AI on Air 第 17 集 | 主权代理金融：韩元稳定币、合规与机器支付", guestZh: "Harry Ho Jin Kim", guestOrgZh: "Hashed Open Finance, CEO", youtubeUrl: "https://www.youtube.com/watch?v=PLU5Jumn1kc" },
     { episode: 15, titleZh: "AI on Air 第 15 集 | 自主商务的信任层：当 AI 代理拥有钱包", guestZh: "Nalin Mittal", guestOrgZh: "Google Cloud, Head of Web3 Products", youtubeUrl: "https://www.youtube.com/watch?v=yOcPja2E5SU" },
     { episode: 14, titleZh: "AI on Air 第 14 集 | 代理经济的信任基础设施", guestZh: "Navin Gupta", guestOrgZh: "Crystal Intelligence, CEO", youtubeUrl: "https://www.youtube.com/watch?v=jS9Of4gn6p4" },
     { episode: 13, titleZh: "AI on Air 第 13 集 | 代理金融：当 AI 幻觉造成数百万损失", guestZh: "Ryan Li", guestOrgZh: "Surf AI, Co-founder & CEO", youtubeUrl: "https://www.youtube.com/watch?v=ozq2mhy9mE0" },
