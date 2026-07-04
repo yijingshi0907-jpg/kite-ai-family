@@ -64,6 +64,51 @@ Next.js hosting, fastest global CDN.
 
 ---
 
+## 🗓️ Automated Sunday sync (recurring)
+
+A scheduled trigger fires **every Sunday 8 PM Pacific** and runs this weekly sync in
+**draft-and-approve** mode. It requires the operator's Mac to be **awake with Chrome
+open and logged into X** — the browser extension only works on the live session.
+
+### Sources → destination pages
+| Source | How to read it | Updates |
+|--------|----------------|---------|
+| [@KiteAIChinese](https://x.com/KiteAIChinese) | **Browser extension** (X blocks plain fetch → 402) | Weekly news → `/family/weekly` |
+| [gokite.ai/media](https://gokite.ai/media) | **WebFetch** (public, fetchable) | Company news → `/family/company` |
+| Chi YouTube videos | **Discovered via the X feed + media page** (youtube.com is BLOCKED to the extension); download by ID with `yt-dlp` | Videos → `/family/personal` (self-hosted) |
+
+> Video discovery does NOT come from browsing the YouTube channel directly — that URL
+> is blocked to the extension. Instead, harvest the `youtube.com/watch?v=…` links that
+> @KiteAIChinese and gokite.ai/media post, then resolve/download those IDs.
+
+### Weekly flow
+1. **Determine the window** — the 7 days since last Sunday (e.g. "after 6/22").
+2. **Gather** (browser extension for X; WebFetch for media): scroll @KiteAIChinese
+   back to the window boundary, collecting post text + dates + any YouTube links; fetch
+   gokite.ai/media for new company articles.
+3. **Resolve video IDs** — X truncates links behind `t.co`; run
+   `curl -sI <t.co-url>` to get the real `youtube.com/watch?v=<ID>`, or read the DOM
+   with the extension's `javascript_tool` (scan `a[href]` for youtube links).
+   Confirm titles/dates with `yt-dlp --skip-download --print "%(upload_date)s | %(title)s"`.
+4. **Dedupe** against what's already seeded (existing weekly posts, interview
+   `youtubeId`s, podcast episodes, news URLs). Skip anything already present.
+5. **DRAFT + APPROVE** — present a summary of exactly what will be added
+   (weekly posts by week, new videos, company news) and **wait for the operator's OK**.
+6. On approval, run the pipeline:
+   - Add new weekly posts grouped by week (Monday `weekOf`), interviews/podcasts, and
+     company news to `prisma/seed-family.mjs` (see Steps 2–4 below).
+   - Self-host new Chi videos: `bash scripts/download-family-videos.sh <id>…` then
+     `bash scripts/upload-family-videos.sh` (Steps 4.5).
+   - Re-seed the DB (Step 4), commit + push (Step 5), verify live (Step 6).
+
+### The trigger
+Managed via the scheduled-tasks/routines system. To change time or pause it, update the
+trigger (it fires a standalone prompt that says: "run the weekly family-sync per the
+Automated Sunday sync section"). If the Mac was asleep/Chrome closed at fire time, just
+run `/family-sync` manually — the flow is identical.
+
+---
+
 ## Step 1 — Gather new content
 
 Ask the user for this week's new items. For each type, collect:
