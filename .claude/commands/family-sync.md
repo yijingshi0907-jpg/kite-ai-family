@@ -74,8 +74,14 @@ open and logged into X** — the browser extension only works on the live sessio
 | Source | How to read it | Updates |
 |--------|----------------|---------|
 | [@KiteAIChinese](https://x.com/KiteAIChinese) | **Browser extension** (X blocks plain fetch → 402) | Weekly news → `/family/weekly` |
-| [gokite.ai/media](https://gokite.ai/media) | **WebFetch** (public, fetchable) | Company news → `/family/company` |
+| Kite press coverage | **WebSearch** for recent "Kite AI" coverage → **WebFetch** each article | Company news → `/family/company` |
 | [Kite YouTube channel](https://www.youtube.com/@kiteai_official/videos) | **`yt-dlp` CLI** (enumerate + download) | Videos → `/family/personal` (self-hosted) |
+
+> **Why not gokite.ai/media directly?** That page is JS-rendered (WebFetch sees only
+> stale content) AND blocked to the extension (like youtube.com). So company news is
+> gathered by **searching for recent Kite press** and fetching the individual article
+> pages (Fortune, CoinDesk, Cointelegraph, Business Insider, etc.), which *are* fetchable.
+> Cross-check gokite.ai/media by eye if you want, but don't rely on fetching it.
 
 > The Claude-in-Chrome **extension is blocked from navigating to youtube.com**, but the
 > **`yt-dlp` command line is NOT** — use it to enumerate the channel directly:
@@ -90,7 +96,11 @@ open and logged into X** — the browser extension only works on the live sessio
    - **X** (browser extension): scroll @KiteAIChinese back to the window boundary,
      collecting post text + dates. (Also fine as a cross-check for video links, but the
      channel enum below is the primary video source.)
-   - **Media** (WebFetch): fetch gokite.ai/media for new company articles.
+   - **Company press** (WebSearch → WebFetch): search e.g. `"Kite AI" (Fortune OR
+     CoinDesk OR Cointelegraph OR Fortune OR "Business Insider") 2026` and recent-news
+     queries for the window; WebFetch each candidate article for title/publisher/date,
+     then translate to Chinese. (gokite.ai/media itself is JS-rendered + extension-blocked
+     — don't fetch it directly.)
    - **YouTube** (`yt-dlp` CLI): `yt-dlp --flat-playlist --playlist-end 15 --print
      "%(id)s | %(title)s" "https://www.youtube.com/@kiteai_official/videos"` — enumerate
      recent uploads, keep the **Chi-related** ones (interviews/panels/AI on Air, not demos).
