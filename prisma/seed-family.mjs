@@ -190,6 +190,7 @@ async function main() {
 
   const interviews = [
     { date: "2026-06-28", titleZh: "AI on Air 第 17 集 | 主权代理金融：韩元稳定币、合规与机器支付", bodyZh: "Chi 对话 Hashed Open Finance CEO Harry Ho Jin Kim（@harryhojinkim），探讨韩国为何可能成为 AI 代理、韩元稳定币与机器原生支付的重要据点，并拆解「Agent 至今为何难以完成交易」这一核心症结。", youtubeId: "PLU5Jumn1kc", sourceUrl: "https://www.youtube.com/watch?v=PLU5Jumn1kc" },
+    { date: "2026-06-22", titleZh: "ProofOfTalk 2026（巴黎卢浮宫）| 代理时代的身份、溯源与验证", bodyZh: "在巴黎卢浮宫举办的 ProofOfTalk 2026 峰会上，Chi 登台参与「Personhood, Provenance, and Verification in the Agentic Age」圆桌，与多位行业领袖共同探讨：在 AI 代理时代，如何验证身份、溯源与真实性。", youtubeId: "MKcpzhme0_E", sourceUrl: "https://www.youtube.com/watch?v=MKcpzhme0_E" },
     { date: "2026-06-11", titleZh: "Kite CEO Chi Zhang：代理互联网的底层基础 | BlockHash 播客第 742 集", bodyZh: "Chi 做客 BlockHash 播客，分享 Kite 的创业历程：为什么稳定币是 AI 代理的理想可编程货币、信用卡欺诈检测如何阻碍代理交易，以及 Kite Passport 如何通过身份与治理解决这一问题。", youtubeId: "se1HXCqNC7E", sourceUrl: "https://www.youtube.com/watch?v=se1HXCqNC7E" },
     { date: "2026-06-06", titleZh: "如何让 AI 代理帮你花钱？Chi Zhang 解密代理支付 | AI-Curious 播客", bodyZh: "Chi 接受 AI-Curious 播客专访，深入浅出地解释 AI 代理如何在用户授权范围内安全、可信地完成支付，以及 Kite 如何打造这套代理支付基础设施。", youtubeId: "OMkE-eO4WX8", sourceUrl: "https://www.youtube.com/watch?v=OMkE-eO4WX8" },
     { date: "2026-05-20", titleZh: "【中文专访】代理支付：下一个万亿美元基础设施 | Chi Zhang x Y Talk", bodyZh: "Chi 接受 Y Talk 专访，深度解析代理支付赛道的万亿美元机遇——为什么 AI 代理需要原生支付能力，Kite 如何成为这一基础设施的核心构建者。", youtubeId: "y1kDxjLH2-g", sourceUrl: "https://www.youtube.com/watch?v=y1kDxjLH2-g" },
@@ -206,6 +207,7 @@ async function main() {
     { date: "2025-11-26", titleZh: "Kite AI 如何构建 AI 代理的支付层？Chi Zhang × Wecryptotogether", bodyZh: "Chi 与韩国最大加密社区 Wecryptotogether 对话，阐述为什么现有支付基础设施无法满足自主 AI 代理的高频交易需求，以及稳定币结算如何改变这一格局。", youtubeId: "y9TKGidsjH0", sourceUrl: "https://www.youtube.com/watch?v=y9TKGidsjH0" },
     { date: "2025-11-12", titleZh: "独家专访：AI 代理如何在链上支付与谈判？Kite CEO Chi Zhang × TheStreet", bodyZh: "TheStreet 独家视频专访，Chi 揭示数字经济的下一个时代将由自主 AI 代理驱动，解析代理如何在链上自主完成支付与商业谈判。", youtubeId: "YmsxlSwvJBk", sourceUrl: "https://www.youtube.com/watch?v=YmsxlSwvJBk" },
     { date: "2025-11-08", titleZh: "Kite AI CEO 揭秘 PayPal 支持的 Web3 愿景 | BLOCKMEDIA 独家专访", bodyZh: "BLOCKMEDIA 独家专访，Chi 深度分享 Kite 获得 PayPal Ventures 投资背后的战略逻辑，以及如何将 AI 代理与区块链支付基础设施深度融合。", youtubeId: "CokbdUYuIV0", sourceUrl: "https://www.youtube.com/watch?v=CokbdUYuIV0" },
+    { date: "2025-10-31", titleZh: "【中文专访】「她」故事 E46：AI Agentic × x402——Kite AI 如何驱动支付的未来 | Chi Zhang", bodyZh: "Chi 做客 Bill Qian 主持的《「她」故事》播客第 46 集，用中文深入分享 AI Agentic 与 x402 协议如何重塑支付，以及 Kite AI 在代理经济中的愿景与实践。", youtubeId: "CT9gobQ0Sbw", sourceUrl: "https://www.youtube.com/watch?v=CT9gobQ0Sbw" },
   ];
 
   for (let i = 0; i < interviews.length; i++) {
