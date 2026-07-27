@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add prisma/seed-family.mjs)",
+      "Bash(git commit *)",
+      "Bash(git push origin main)",
+      "Bash(node --check prisma/seed-family.mjs)",
+      "Bash(bash scripts/download-family-videos.sh *)",
+      "Bash(bash scripts/upload-family-videos.sh)",
+      "Bash(yt-dlp --flat-playlist --playlist-end 15 --print *)",
+      "Bash(yt-dlp --skip-download --print *)",
+      "Edit(prisma/seed-family.mjs)",
+      "WebSearch",
+      "WebFetch",
+      "mcp__claude-in-chrome__list_connected_browsers",
+      "mcp__claude-in-chrome__tabs_context_mcp",
+      "mcp__claude-in-chrome__navigate",
+      "mcp__claude-in-chrome__get_page_text",
+      "mcp__claude-in-chrome__computer",
+      "mcp__claude-in-chrome__read_page",
+      "mcp__claude-in-chrome__find",
+      "mcp__claude-in-chrome__tabs_create_mcp",
+      "mcp__claude-in-chrome__tabs_close_mcp",
+      "mcp__claude-in-chrome__select_browser"
+    ]
+  }
+}
