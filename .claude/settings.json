@@ -4,11 +4,18 @@
       "Bash(git add prisma/seed-family.mjs)",
       "Bash(git commit *)",
       "Bash(git push origin main)",
+      "Bash(git status)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
       "Bash(node --check prisma/seed-family.mjs)",
+      "Bash(DATABASE_URL=\"postgresql://root:sne1ZR3945pB8yDYOkvM6FfhdVo0W7x2@47.81.30.93:32606/zeabur\" node prisma/seed-family.mjs)",
       "Bash(bash scripts/download-family-videos.sh *)",
       "Bash(bash scripts/upload-family-videos.sh)",
       "Bash(yt-dlp --flat-playlist --playlist-end 15 --print *)",
       "Bash(yt-dlp --skip-download --print *)",
+      "Bash(grep *)",
+      "Bash(date)",
       "Edit(prisma/seed-family.mjs)",
       "WebSearch",
       "WebFetch",
@@ -21,7 +28,8 @@
       "mcp__claude-in-chrome__find",
       "mcp__claude-in-chrome__tabs_create_mcp",
       "mcp__claude-in-chrome__tabs_close_mcp",
-      "mcp__claude-in-chrome__select_browser"
+      "mcp__claude-in-chrome__select_browser",
+      "mcp__claude-in-chrome__browser_batch"
     ]
   }
 }
